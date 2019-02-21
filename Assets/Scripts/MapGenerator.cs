@@ -80,7 +80,6 @@ public class MapGenerator : MonoBehaviour
                 if(buildMap.Tiles[x, y] != TILE_TYPE.PATH)
                 {
                     // if tile is buildable //
-
                     //print("[ " + x.ToString() + " | " + y.ToString() + " ]");
                     continue;
                 }

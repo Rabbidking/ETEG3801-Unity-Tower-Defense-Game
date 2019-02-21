@@ -236,6 +236,7 @@ MonoBehaviour:
   MapCamera: {fileID: 1734833822}
   MapLayer: 9
   MapCursor: {fileID: 308379048}
+  TowerParent: {fileID: 1506344851}
   MapTerrain: {fileID: 0}
 --- !u!4 &466419921
 Transform:
@@ -302,6 +303,7 @@ Transform:
   - {fileID: 1163082788}
   - {fileID: 466419921}
   - {fileID: 308379052}
+  - {fileID: 1506344852}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -404,6 +406,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TowerList: []
+  DummyTower: {fileID: 7947368968500426283, guid: 6e34418418013c346a7db7e5218dff0e,
+    type: 3}
 --- !u!4 &1163082788
 Transform:
   m_ObjectHideFlags: 0
@@ -417,6 +421,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 784420065}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1506344851
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1506344852}
+  m_Layer: 0
+  m_Name: TowerParent
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1506344852
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1506344851}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 784420065}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1734833820
 GameObject:

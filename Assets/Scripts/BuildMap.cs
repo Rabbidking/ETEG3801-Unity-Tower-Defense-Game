@@ -2,17 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TILE_TYPE {BUILD, NO_BUILD, PATH};
+public enum TILE_TYPE{BUILDABLE, TAKEN, NO_BUILD, PATH};
+
+struct TileObject
+{
+    public GameObject mGameObject;
+    public uint mTileX, mTileY;
+}
 
 public class BuildMap : MonoBehaviour
 {
+    //public char[,] Tiles;
     public TILE_TYPE[,] Tiles;
+    private List<TileObject> TileObjects = new List<TileObject>();
 
     public TowerPrefabList TowerPrefabs;
     public Camera MapCamera;
     public int MapLayer;
 
-    public GameObject MapCursor, MapTerrain;
+    public GameObject MapCursor, TowerParent, MapTerrain;
     private MeshRenderer MapCursorRenderer;
 
     private int MapSize, MapGridSize;
@@ -46,11 +54,17 @@ public class BuildMap : MonoBehaviour
         MapCamera.transform.rotation.SetLookRotation(new Vector3(90.0f, 0, 0));
     }
 
+    // (Input.GetMouseButtonDown(0) //
+
     void Update()
     {
         if(RaycastToTile())
         {
             HighlightCurrentTile();
+            if(Input.GetKeyDown("b"))
+                SpawnTower();
+            else if(Input.GetKeyDown("d"))
+                DestroyTower();
         }
         else
             MapCursor.SetActive(false);
@@ -85,19 +99,48 @@ public class BuildMap : MonoBehaviour
         MapCursor.SetActive(true);
         MapCursor.transform.position = new Vector3(newCursorX, MapCursor.transform.position.y, newCursorZ);
 
-        if (Tiles[CurrentTile[0], CurrentTile[1]] == TILE_TYPE.BUILD)
+        if(Tiles[CurrentTile[0], CurrentTile[1]] == 0)
             MapCursorRenderer.material.color = Color.blue;
         else
             MapCursorRenderer.material.color = Color.red;
     }
 
-    private void BuildTower()
+    private void SpawnTower()
     {
+        if(Tiles[CurrentTile[0], CurrentTile[1]] == TILE_TYPE.BUILDABLE)
+        {
+            TileObject newTower;
+            newTower.mTileX = CurrentTile[0];
+            newTower.mTileY = CurrentTile[1];
 
+            float newX, newZ;
+            GetCurrentTileCenter(out newX, out newZ);
+
+            newTower.mGameObject = Instantiate(TowerPrefabs.DummyTower);
+            newTower.mGameObject.transform.SetParent(TowerParent.transform, false);
+            newTower.mGameObject.transform.localPosition = new Vector3(newX, 0.5f, newZ);
+            newTower.mGameObject.transform.localScale = new Vector3(TileSize * 0.9f, MapHeight + 0.5f, TileSize * 0.9f);
+            TileObjects.Add(newTower);
+
+            Tiles[CurrentTile[0], CurrentTile[1]] = TILE_TYPE.TAKEN;
+        }
     }
 
     private void DestroyTower()
     {
+        if(Tiles[CurrentTile[0], CurrentTile[1]] == TILE_TYPE.TAKEN)
+        {
+            foreach(TileObject TO in TileObjects)
+            {
+                if(TO.mTileX == CurrentTile[0] && TO.mTileY == CurrentTile[1])
+                {
+                    Destroy(TO.mGameObject);
+                    TileObjects.Remove(TO);
+                    break;
+                }
+            }
 
+            Tiles[CurrentTile[0], CurrentTile[1]] = TILE_TYPE.BUILDABLE;
+        }
     }
 }
