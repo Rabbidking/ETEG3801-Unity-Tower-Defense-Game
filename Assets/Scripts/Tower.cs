@@ -113,19 +113,18 @@ public class Tower : MonoBehaviour
         {
             if (Time.time - lastShotTime > towerData.CurrentLevel.fireRate)
             {
-                Shoot(target.GetComponent<Collider>());
+                Shoot(target);
                 lastShotTime = Time.time;
             }
         }
     }
 
-    void Shoot(Collider target)
+    void Shoot(GameObject target)
     {
-        //GameObject bulletPrefab = bulletPrefab;
         Vector3 startPosition = gameObject.transform.position;
         Vector3 targetPosition = target.transform.position;
-        startPosition.z = bulletPrefab.transform.position.z;
-        targetPosition.z = bulletPrefab.transform.position.z;
+        //startPosition = bulletPrefab.transform.position;
+        //targetPosition = bulletPrefab.transform.position;
 
         GameObject newBullet = (GameObject)Instantiate(bulletPrefab);
         newBullet.transform.position = startPosition;
@@ -134,10 +133,10 @@ public class Tower : MonoBehaviour
         bulletComp.startPosition = startPosition;
         bulletComp.targetPosition = targetPosition;
 
-        Animator animator = towerData.CurrentLevel.visualization.GetComponent<Animator>();
-        animator.SetTrigger("fireShot");
-        AudioSource audioSource = gameObject.GetComponent<AudioSource>();
-        audioSource.PlayOneShot(audioSource.clip);
+        //Animator animator = towerData.CurrentLevel.visualization.GetComponent<Animator>();
+        //animator.SetTrigger("fireShot");
+        //AudioSource audioSource = gameObject.GetComponent<AudioSource>();
+        //audioSource.PlayOneShot(audioSource.clip);
     }
 
     void OnEnemyDestroy(GameObject enemy)
@@ -154,8 +153,7 @@ public class Tower : MonoBehaviour
             //g.GetComponent<Bullet>().target = other.transform;
 
             enemiesInRange.Add(other.gameObject);
-            EnemyDestructionDelegate del =
-                other.gameObject.GetComponent<EnemyDestructionDelegate>();
+            EnemyDestructionDelegate del = other.gameObject.GetComponent<EnemyDestructionDelegate>();
             del.enemyDelegate += OnEnemyDestroy;
         }
     }
@@ -165,8 +163,7 @@ public class Tower : MonoBehaviour
         if (other.gameObject.tag.Equals("Enemy"))
         {
             enemiesInRange.Remove(other.gameObject);
-            EnemyDestructionDelegate del =
-                other.gameObject.GetComponent<EnemyDestructionDelegate>();
+            EnemyDestructionDelegate del = other.gameObject.GetComponent<EnemyDestructionDelegate>();
             del.enemyDelegate -= OnEnemyDestroy;
         }
     }

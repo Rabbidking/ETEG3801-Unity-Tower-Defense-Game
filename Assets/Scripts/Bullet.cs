@@ -46,11 +46,11 @@ public class Bullet : MonoBehaviour
         {
             if (target != null)
             {
-                /*// 3
-                Transform healthBarTransform = target.transform.Find("Health");
+                
+                /*Transform healthBarTransform = target.transform.Find("Health");
                 Health health = healthBarTransform.gameObject.GetComponent<Health>();
                 health.decrease();
-                // 4
+
                 if (health.current() <= 0)
                 {
                     Destroy(target);
@@ -59,23 +59,27 @@ public class Bullet : MonoBehaviour
 
                     //gameManager.Gold += 50;
                 }*/
-                Health health = target.GetComponentInChildren<Health>();
-                health.decrease();
-                if (health.current() <= 0)
-                {
-                    Destroy(gameObject);
-                }
+
+                // Fly towards the target
+                Vector3 dir = target.transform.position - transform.position;
+                GetComponent<Rigidbody>().velocity = dir.normalized * speed;
+            }
+
+            else
+            {
+                // Otherwise destroy self
+                Destroy(gameObject);
             }
         }
     }
 
-    /*void OnTriggerEnter(Collider co)
+    void OnTriggerEnter(Collider co)
     {
         Health health = co.GetComponentInChildren<Health>();
-        health.decrease();
-        if(health.current() <= 0)
+        if(health)
         {
+            health.decrease();
             Destroy(gameObject);
         }
-    }*/
+    }
 }
