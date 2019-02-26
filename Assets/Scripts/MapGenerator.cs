@@ -13,12 +13,13 @@ public class MapGenerator : MonoBehaviour
     public Texture2D buildable;
     public Texture2D path;
 
-    public void Start() { Generate(); }
     public Terrain current;
 
     public BuildMap buildMap;
 
-    void Generate()
+	public Vector3 Start, End;
+
+    public void Generate()
     {
         buildMap.SetMapValues(size, gridSize, height);
 
@@ -38,8 +39,8 @@ public class MapGenerator : MonoBehaviour
         int x = gridSize / 2;//Random.Range(1, gridSize - 2);
         int y = -1;
         int steps = gridSize;
-
-        Vector2Int[] dirs = new Vector2Int[] { Vector2Int.right, Vector2Int.left };
+		Start = gridSize * new Vector3(((float)x) / gridSize, 1);
+		Vector2Int[] dirs = new Vector2Int[] { Vector2Int.right, Vector2Int.left };
         Vector2Int dir = Vector2Int.down;
 
         while (y < gridSize - 1)
@@ -69,7 +70,6 @@ public class MapGenerator : MonoBehaviour
                 dir = Vector2Int.down;
             }
         }
-       
         float[,] heights = new float[size, size];
         float scale = size / (float)gridSize;
         for (x = 0; x < gridSize; x++)
@@ -132,6 +132,8 @@ public class MapGenerator : MonoBehaviour
         current = buildMap.MapTerrain.GetComponent<Terrain>();
         buildMap.MapTerrain.transform.SetParent(buildMap.transform, false);
         buildMap.MapTerrain.transform.localPosition = new Vector3(data.size.x / -2f, 0, data.size.z / -2f);
+		End = transform.position + gridSize*new Vector3(((float)x) / gridSize, 1);
+		Start += transform.position;
         buildMap.MapTerrain.layer = buildMap.MapLayer;
         buildMap.FinishSetup();
     }
