@@ -12,6 +12,9 @@ struct TileObject
 
 public class BuildMap : MonoBehaviour
 {
+    public ResourceManager GoldMaster;
+    private int DummyTowerCost = 100;
+
     //public char[,] Tiles;
     public TILE_TYPE[,] Tiles;
     private List<TileObject> TileObjects = new List<TileObject>();
@@ -147,7 +150,7 @@ public class BuildMap : MonoBehaviour
 
     private void SpawnTower()
     {
-        if(Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.BUILDABLE)
+        if(Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.BUILDABLE && GoldMaster.PlayerGold >= DummyTowerCost)
         {
             TileObject newTower;
             newTower.mTileX = SelectedTile[0];
@@ -163,6 +166,9 @@ public class BuildMap : MonoBehaviour
             TileObjects.Add(newTower);
 
             Tiles[SelectedTile[0], SelectedTile[1]] = TILE_TYPE.TAKEN;
+
+            GoldMaster.PlayerGold -= DummyTowerCost;
+            GoldMaster.UpdateResourceText();
         }
     }
 
@@ -181,6 +187,9 @@ public class BuildMap : MonoBehaviour
             }
 
             Tiles[SelectedTile[0], SelectedTile[1]] = TILE_TYPE.BUILDABLE;
+
+            GoldMaster.PlayerGold += (DummyTowerCost / 2);
+            GoldMaster.UpdateResourceText();
         }
     }
 }
