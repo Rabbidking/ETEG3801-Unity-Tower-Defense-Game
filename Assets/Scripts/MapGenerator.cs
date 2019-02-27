@@ -13,128 +13,91 @@ public class MapGenerator : MonoBehaviour
     public Texture2D buildable;
     public Texture2D path;
 
+    public void Start() { Generate(); }
     public Terrain current;
 
-    public BuildMap buildMap;
+    public GameObject[,] tiles;
 
-	public Vector3 Start, End;
-
-    public void Generate()
-    {
-        buildMap.SetMapValues(size, gridSize, height);
-
+    void Generate() {
         TerrainData data = new TerrainData();
-        //due to Terrian Magic =( the heightmapResolution is always 2**n + 1 for some n
-        //so we get a resolution as close to our input size as possible but the world unit size is the same.
-
-        data.heightmapResolution = size;   
+        //do to Terrian Magic =( the heightmapResolution is always 2**n + 1 for some n
+        //so we get a resolution as close to our input size as possible but the world unit size is hte same.
+        data.heightmapResolution = size;
+       
         data.size = new Vector3(size, height, size);
-
         size = data.heightmapResolution;
         print(data.alphamapResolution = size);
-
-        buildMap.Tiles = new TILE_TYPE[gridSize, gridSize];
-        //buildMap.Tiles = new GameObject[gridSize, gridSize];
-
+        tiles = new GameObject[gridSize, gridSize];
         int x = gridSize / 2;//Random.Range(1, gridSize - 2);
         int y = -1;
         int steps = gridSize;
-		Start = gridSize * new Vector3(((float)x) / gridSize, 1);
-		Vector2Int[] dirs = new Vector2Int[] { Vector2Int.right, Vector2Int.left };
+        Vector2Int[] dirs = new Vector2Int[] { Vector2Int.right, Vector2Int.left };
         Vector2Int dir = Vector2Int.down;
-
-        while (y < gridSize - 1)
-        {
+        while (y < gridSize - 1) {
             steps = Random.Range(2, maxRun);
-            while (steps > 0)
-            {
-                if (x + dir.x < 1 || x + dir.x > gridSize - 2 || y - dir.y > gridSize - 1)
-                {
+            while (steps > 0) {
+                if (x + dir.x < 1 || x + dir.x > gridSize - 2 || y - dir.y > gridSize - 1) {
                     //x = Mathf.Clamp(x, 1, gridSize - 2);
                     break;
                 }
-                
                 x += dir.x;
                 y -= dir.y;
-                //buildMap.Tiles[x, y] = gameObject;
-                buildMap.Tiles[x, y] = TILE_TYPE.PATH;
+                tiles[x, y] = gameObject;
                 steps--;
             }
-
-            if (dir == Vector2Int.down)
-            {
+            if (dir == Vector2Int.down) {
                 dir = dirs[Random.Range(0,dirs.Length)];
             }
-            else
-            {
+            else {
                 dir = Vector2Int.down;
             }
         }
+       
+
         float[,] heights = new float[size, size];
         float scale = size / (float)gridSize;
         for (x = 0; x < gridSize; x++)
         {
             for (y = 0; y < gridSize; y++)
             {
-                //if(buildMap.Tiles[x, y] != gameObject)
-                if(buildMap.Tiles[x, y] != TILE_TYPE.PATH)
-                {
-                    // if tile is buildable //
-                    //print("[ " + x.ToString() + " | " + y.ToString() + " ]");
-                    continue;
-                }
-
+                if (tiles[x, y] != gameObject) continue;
                 int sx = Mathf.RoundToInt(x * scale);
                 int sy = Mathf.RoundToInt(y * scale);
                 int ex = Mathf.RoundToInt((x + 1) * scale);
                 int ey = Mathf.RoundToInt((y + 1) * scale);
-
-                for (int cx = sx; cx < ex; cx++)
-                {
-                    for (int cy = sy; cy < ey; cy++)
-                    {
+                for (int cx = sx; cx < ex; cx++) {
+                    for (int cy = sy; cy < ey; cy++) {
                         heights[cx, cy] = 1;
                     }
                 }
             }
         }
-
         float[,,] textures = new float[size, size, 2];
-        for (x = 0; x < size; x++)
-        {
-            for (y = 0; y < size; y++)
-            {
+        for (x = 0; x < size; x++) {
+            for (y = 0; y < size; y++) {
                 if (heights[x, y] == 0)
                 {
                     heights[x, y] = 1;
                     textures[x, y, 0] = 0;
                     textures[x, y, 1] = 1;
                 }
-                else
-                {
+                else {
                     heights[x, y] = 0;
                     textures[x, y, 0] = 1;
                     textures[x, y, 1] = 0;
                 }
             }
         }
-
         TerrainLayer pathLayer = new TerrainLayer();
         pathLayer.diffuseTexture = path;
-
         TerrainLayer buildableLayer = new TerrainLayer();
         buildableLayer.diffuseTexture = buildable;
         data.terrainLayers = new TerrainLayer[] { pathLayer, buildableLayer};
         data.SetHeights(0, 0, heights);
         data.SetAlphamaps(0, 0, textures);
-
-        buildMap.MapTerrain = Terrain.CreateTerrainGameObject(data);
-        current = buildMap.MapTerrain.GetComponent<Terrain>();
-        buildMap.MapTerrain.transform.SetParent(buildMap.transform, false);
-        buildMap.MapTerrain.transform.localPosition = new Vector3(data.size.x / -2f, 0, data.size.z / -2f);
-		End = transform.position + gridSize*new Vector3(((float)x) / gridSize, 1);
-		Start += transform.position;
-        buildMap.MapTerrain.layer = buildMap.MapLayer;
-        buildMap.FinishSetup();
+        GameObject go = Terrain.CreateTerrainGameObject(data);
+        current = go.GetComponent<Terrain>();
+        go.transform.SetParent(transform, false);
+        go.transform.localPosition = new Vector3(data.size.x / -2f, 0, data.size.z / -2f);
     }
 }
