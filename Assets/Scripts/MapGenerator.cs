@@ -13,24 +13,20 @@ public class MapGenerator : MonoBehaviour
     public Texture2D buildable;
     public Texture2D path;
 
+    public void Start() { Generate(); }
     public Terrain current;
 
-    public BuildMap buildMap;
+    public GameObject[,] tiles;
 
-	public Vector3 Start, End;
-
-    public void Generate()
-    {
-        buildMap.SetMapValues(size, gridSize, height);
-
+    void Generate() {
         TerrainData data = new TerrainData();
-        //due to Terrian Magic =( the heightmapResolution is always 2**n + 1 for some n
-        //so we get a resolution as close to our input size as possible but the world unit size is the same.
-
-        data.heightmapResolution = size;   
+        //do to Terrian Magic =( the heightmapResolution is always 2**n + 1 for some n
+        //so we get a resolution as close to our input size as possible but the world unit size is hte same.
+        data.heightmapResolution = size;
+       
         data.size = new Vector3(size, height, size);
-
         size = data.heightmapResolution;
+
         data.alphamapResolution = size;
 
         buildMap.Tiles = new TILE_TYPE[gridSize, gridSize];
@@ -42,31 +38,22 @@ public class MapGenerator : MonoBehaviour
 		Start = new Vector3(0.5f, 0, (x + 0.5f));
 		Vector2Int[] dirs = new Vector2Int[] { Vector2Int.right, Vector2Int.left };
         Vector2Int dir = Vector2Int.down;
-
-        while (y < gridSize - 1)
-        {
+        while (y < gridSize - 1) {
             steps = Random.Range(2, maxRun);
-            while (steps > 0)
-            {
-                if (x + dir.x < 1 || x + dir.x > gridSize - 2 || y - dir.y > gridSize - 1)
-                {
+            while (steps > 0) {
+                if (x + dir.x < 1 || x + dir.x > gridSize - 2 || y - dir.y > gridSize - 1) {
                     //x = Mathf.Clamp(x, 1, gridSize - 2);
                     break;
                 }
-                
                 x += dir.x;
                 y -= dir.y;
-                //buildMap.Tiles[x, y] = gameObject;
-                buildMap.Tiles[x, y] = TILE_TYPE.PATH;
+                tiles[x, y] = gameObject;
                 steps--;
             }
-
-            if (dir == Vector2Int.down)
-            {
+            if (dir == Vector2Int.down) {
                 dir = dirs[Random.Range(0,dirs.Length)];
             }
-            else
-            {
+            else {
                 dir = Vector2Int.down;
             }
 		}
@@ -79,23 +66,13 @@ public class MapGenerator : MonoBehaviour
         {
             for (y = 0; y < gridSize; y++)
             {
-                //if(buildMap.Tiles[x, y] != gameObject)
-                if(buildMap.Tiles[x, y] != TILE_TYPE.PATH)
-                {
-                    // if tile is buildable //
-                    //print("[ " + x.ToString() + " | " + y.ToString() + " ]");
-                    continue;
-                }
-
+                if (tiles[x, y] != gameObject) continue;
                 int sx = Mathf.RoundToInt(x * scale);
                 int sy = Mathf.RoundToInt(y * scale);
                 int ex = Mathf.RoundToInt((x + 1) * scale);
                 int ey = Mathf.RoundToInt((y + 1) * scale);
-
-                for (int cx = sx; cx < ex; cx++)
-                {
-                    for (int cy = sy; cy < ey; cy++)
-                    {
+                for (int cx = sx; cx < ex; cx++) {
+                    for (int cy = sy; cy < ey; cy++) {
                         heights[cx, cy] = 1;
                     }
                 }
@@ -112,18 +89,15 @@ public class MapGenerator : MonoBehaviour
                     textures[x, y, 0] = 0;
                     textures[x, y, 1] = 1;
                 }
-                else
-                {
+                else {
                     heights[x, y] = 0;
                     textures[x, y, 0] = 1;
                     textures[x, y, 1] = 0;
                 }
             }
         }
-
         TerrainLayer pathLayer = new TerrainLayer();
         pathLayer.diffuseTexture = path;
-
         TerrainLayer buildableLayer = new TerrainLayer();
         buildableLayer.diffuseTexture = buildable;
         data.terrainLayers = new TerrainLayer[] { pathLayer, buildableLayer};
