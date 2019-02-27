@@ -31,7 +31,7 @@ public class MapGenerator : MonoBehaviour
         data.size = new Vector3(size, height, size);
 
         size = data.heightmapResolution;
-        print(data.alphamapResolution = size);
+        data.alphamapResolution = size;
 
         buildMap.Tiles = new TILE_TYPE[gridSize, gridSize];
         //buildMap.Tiles = new GameObject[gridSize, gridSize];
@@ -39,7 +39,7 @@ public class MapGenerator : MonoBehaviour
         int x = gridSize / 2;//Random.Range(1, gridSize - 2);
         int y = -1;
         int steps = gridSize;
-		Start = gridSize * new Vector3(((float)x) / gridSize, 1);
+		Start = new Vector3(0.5f, 0, (x + 0.5f));
 		Vector2Int[] dirs = new Vector2Int[] { Vector2Int.right, Vector2Int.left };
         Vector2Int dir = Vector2Int.down;
 
@@ -69,8 +69,11 @@ public class MapGenerator : MonoBehaviour
             {
                 dir = Vector2Int.down;
             }
-        }
-        float[,] heights = new float[size, size];
+		}
+		float gridScale = ((float)data.size.x) / gridSize;
+		End = new Vector3(y + 0.5f, 0, x + 0.5f) * gridScale;
+	    Start *= gridScale;
+		float[,] heights = new float[size, size];
         float scale = size / (float)gridSize;
         for (x = 0; x < gridSize; x++)
         {
@@ -98,8 +101,7 @@ public class MapGenerator : MonoBehaviour
                 }
             }
         }
-
-        float[,,] textures = new float[size, size, 2];
+		float[,,] textures = new float[size, size, 2];
         for (x = 0; x < size; x++)
         {
             for (y = 0; y < size; y++)
@@ -131,9 +133,10 @@ public class MapGenerator : MonoBehaviour
         buildMap.MapTerrain = Terrain.CreateTerrainGameObject(data);
         current = buildMap.MapTerrain.GetComponent<Terrain>();
         buildMap.MapTerrain.transform.SetParent(buildMap.transform, false);
-        buildMap.MapTerrain.transform.localPosition = new Vector3(data.size.x / -2f, 0, data.size.z / -2f);
-		End = transform.position + gridSize*new Vector3(((float)x) / gridSize, 1);
-		Start += transform.position;
+		Vector3 offset = new Vector3(data.size.x / -2f, 0, data.size.z / -2f);
+		buildMap.MapTerrain.transform.localPosition += offset;
+		Start += offset;
+		End += offset;
         buildMap.MapTerrain.layer = buildMap.MapLayer;
         buildMap.FinishSetup();
     }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Monster : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class Monster : MonoBehaviour
 
         GameObject castle = GameObject.Find("Castle");
         if (castle)
-            GetComponent<UnityEngine.AI.NavMeshAgent>().destination = castle.transform.position;
+            GetComponent<NavMeshAgent>().destination = castle.transform.position;
     }
 
     void OnTriggerEnter(Collider co)
