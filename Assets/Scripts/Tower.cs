@@ -143,7 +143,7 @@ public class Tower : MonoBehaviour
         bulletComp.target = target.gameObject;
         bulletComp.startPosition = startPosition;
         bulletComp.targetPosition = targetPosition;
-
+        GameObject.Destroy(newBullet, 3);
         //Animator animator = towerData.CurrentLevel.visualization.GetComponent<Animator>();
         //animator.SetTrigger("fireShot");
         //AudioSource audioSource = gameObject.GetComponent<AudioSource>();
