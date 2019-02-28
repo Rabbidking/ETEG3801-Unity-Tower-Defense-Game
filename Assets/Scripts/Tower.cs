@@ -111,7 +111,7 @@ public class Tower : MonoBehaviour
             //float distanceToGoal = Vector3.Distance(enemy.transform.position, GameObject.Find("Castle").transform.position);
 
             //ADDED FOR 2/29/DEMO by RyanTollefson
-            float distanceToGoal = Vector3.Distance(enemy.transform.position, mg.End);
+            float distanceToGoal = Vector3.Distance(enemy.transform.position, mg.EndPos);
             
             if (distanceToGoal < minimalEnemyDistance)
             {

@@ -13,8 +13,9 @@ public class EndPoint : MonoBehaviour
             rm.PlayerHealth -= 10;
             rm.UpdateResourceText();
             if (rm.PlayerHealth <= 0) {
-                SceneManager.LoadScene(0);
-            }
+				GameObject.Find("TileMapGroup").GetComponent<MapGenerator>().CleanUp();
+				SceneManager.LoadScene(0);
+			}
         }
     }
 }

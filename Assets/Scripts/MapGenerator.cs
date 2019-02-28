@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class MapGenerator : MonoBehaviour
 	public float height;
 	public int gridSize;
 	public int maxRun;
-    public float gridScale;
+	public float gridScale;
 
 	public Texture2D buildable;
 	public Texture2D path;
@@ -18,7 +19,16 @@ public class MapGenerator : MonoBehaviour
 
 	public BuildMap buildMap;
 
-	public Vector3 Start, End;
+	public Vector3 StartPos, EndPos;
+
+	public Spawner Spawner;
+	public GameObject endPoint;
+
+	private NavMeshDataInstance currentNavMesh;
+
+	public void Start() {
+		Generate();
+	}
 
 	public void Generate()
 	{
@@ -40,7 +50,7 @@ public class MapGenerator : MonoBehaviour
 		int x = gridSize / 2;//Random.Range(1, gridSize - 2);
 		int y = -1;
 		int steps = gridSize;
-		Start = new Vector3(0.5f, 0, (x + 0.5f));
+		StartPos = new Vector3(0.5f, 0, (x + 0.5f));
 		Vector2Int[] dirs = new Vector2Int[] { Vector2Int.right, Vector2Int.left };
 		Vector2Int dir = Vector2Int.down;
 
@@ -72,8 +82,8 @@ public class MapGenerator : MonoBehaviour
 			}
 		}
 		gridScale = ((float)data.size.x) / gridSize;
-		End = new Vector3(y + 0.5f, 0, x + 0.5f) * gridScale;
-		Start *= gridScale;
+		EndPos = new Vector3(y + 0.5f, 0, x + 0.5f) * gridScale;
+		StartPos *= gridScale;
 		float[,] heights = new float[size, size];
 		float scale = size / (float)gridSize;
 		for (x = 0; x < gridSize; x++)
@@ -136,9 +146,28 @@ public class MapGenerator : MonoBehaviour
 		buildMap.MapTerrain.transform.SetParent(buildMap.transform, false);
 		Vector3 offset = new Vector3(data.size.x / -2f, 0, data.size.z / -2f);
 		buildMap.MapTerrain.transform.localPosition += offset;
-		Start += offset;
-		End += offset;
+		StartPos += offset;
+		EndPos += offset;
 		buildMap.MapTerrain.layer = buildMap.MapLayer;
 		buildMap.FinishSetup();
+
+		List<NavMeshBuildSource> sourceList = new List<NavMeshBuildSource>();
+		List<NavMeshBuildMarkup> markups = new List<NavMeshBuildMarkup>();
+		NavMeshBuilder.CollectSources(new Bounds(Vector3.zero, Vector3.one * 1000), 0 | (1 << 9), NavMeshCollectGeometry.RenderMeshes, 0, markups, sourceList);
+		NavMeshBuildSettings nmbs = NavMesh.CreateSettings();
+		nmbs.agentTypeID = Spawner.nma.agentTypeID;
+		NavMeshData nmd = NavMeshBuilder.BuildNavMeshData(nmbs, sourceList, new Bounds(transform.position, Vector3.one * 1000), Vector3.zero, Quaternion.identity);
+
+		currentNavMesh = NavMesh.AddNavMeshData(nmd);
+		Spawner spawn = Instantiate(Spawner, StartPos, Quaternion.identity);
+		spawn.Startpos = StartPos;
+		spawn.Endpos = EndPos;
+
+		endPoint.transform.position = EndPos + Vector3.up;
+		endPoint.transform.localScale = new Vector3(gridScale, 2, gridScale);
+	}
+
+	public void CleanUp() {
+		NavMesh.RemoveNavMeshData(currentNavMesh);
 	}
 }
