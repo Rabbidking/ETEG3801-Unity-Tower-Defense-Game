@@ -9,13 +9,18 @@ public class MenuScripts : MonoBehaviour
 	private string[] scenePaths;
 	void Start()
 	{
-		myLoadedAssetBundle = AssetBundle.LoadFromFile("Assets/AssetBundles/scenes");
-		scenePaths = myLoadedAssetBundle.GetAllScenePaths();
+        //REMOVED FOR 2/29/DEMO by RyanTollefson
+        //myLoadedAssetBundle = AssetBundle.LoadFromFile("Assets/AssetBundles/scenes");
+		///scenePaths = myLoadedAssetBundle.GetAllScenePaths();
 	}
     // Start is called before the first frame update
     public void startGame()
     {
-        SceneManager.LoadScene(scenePaths[0], LoadSceneMode.Single);
+        //REMOVED FOR 2/29/DEMO by RyanTollefson
+        //SceneManager.LoadScene(scenePaths[0], LoadSceneMode.Single);
+        
+        //ADDED FOR 2/29/DEMO by RyanTollefson
+        SceneManager.LoadScene(1);
     }
 
     // Update is called once per frame

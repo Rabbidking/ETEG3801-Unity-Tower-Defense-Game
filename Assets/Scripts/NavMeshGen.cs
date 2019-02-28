@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class NavMeshGen : MonoBehaviour
 {
 	public Spawner Spawner;
+    public GameObject endPoint;
 	MapGenerator mg;
 	// Start is called before the first frame update
 	void Start()
@@ -23,6 +24,9 @@ public class NavMeshGen : MonoBehaviour
 		Spawner spawn = Instantiate(Spawner, mg.Start, Quaternion.identity);
 		spawn.Startpos = mg.Start;
 		spawn.Endpos = mg.End;
+
+        endPoint.transform.position = mg.End + Vector3.up;
+        endPoint.transform.localScale = new Vector3(mg.gridScale,2,mg.gridScale);
 	}
 
 	// Update is called once per frame

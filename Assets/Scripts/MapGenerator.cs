@@ -9,6 +9,7 @@ public class MapGenerator : MonoBehaviour
 	public float height;
 	public int gridSize;
 	public int maxRun;
+    public float gridScale;
 
 	public Texture2D buildable;
 	public Texture2D path;
@@ -70,7 +71,7 @@ public class MapGenerator : MonoBehaviour
 				dir = Vector2Int.down;
 			}
 		}
-		float gridScale = ((float)data.size.x) / gridSize;
+		gridScale = ((float)data.size.x) / gridSize;
 		End = new Vector3(y + 0.5f, 0, x + 0.5f) * gridScale;
 		Start *= gridScale;
 		float[,] heights = new float[size, size];

@@ -42,7 +42,7 @@ public class Bullet : MonoBehaviour
         float timeInterval = Time.time - startTime;
         gameObject.transform.position = Vector3.Lerp(startPosition, targetPosition, timeInterval * speed / distance);
 
-        if (gameObject.transform.position.Equals(targetPosition))
+        if ((gameObject.transform.position - targetPosition).sqrMagnitude < 0.01 )
         {
             if (target != null)
             {
@@ -75,11 +75,13 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter(Collider co)
     {
+        print(co);
         Health health = co.GetComponentInChildren<Health>();
         if(health)
         {
             health.decrease();
             Destroy(gameObject);
         }
+        
     }
 }

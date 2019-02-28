@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -433,6 +433,64 @@ Transform:
   m_Father: {fileID: 784420065}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &692365763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 692365766}
+  - component: {fileID: 692365765}
+  - component: {fileID: 692365764}
+  m_Layer: 0
+  m_Name: Destoryer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &692365764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692365763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89f26cf298f74954b9d8b437d61ea4e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rm: {fileID: 1205316017}
+--- !u!65 &692365765
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692365763}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &692365766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692365763}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &784420063
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,8 +525,9 @@ MonoBehaviour:
   height: 3
   gridSize: 15
   maxRun: 10
-  buildable: {fileID: 2800000, guid: fc2f3b960ed410547b95c8cbbd35d2bb, type: 3}
-  path: {fileID: 2800000, guid: 26f7fc857b7d7444586d22df5ac2788b, type: 3}
+  gridScale: 0
+  buildable: {fileID: 2800000, guid: 8fa7a12a1922c634f9f74fb4d345dec1, type: 3}
+  path: {fileID: 2800000, guid: fa37f9fbc84fee74695e17b18d36207a, type: 3}
   current: {fileID: 0}
   buildMap: {fileID: 466419920}
   Start: {x: 0, y: 0, z: 0}
@@ -505,6 +564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Spawner: {fileID: 7298065493668478016, guid: 3ce06576dbbfab34387f1d8de4ae1df3, type: 3}
+  endPoint: {fileID: 692365763}
 --- !u!1 &979018276
 GameObject:
   m_ObjectHideFlags: 0
@@ -774,7 +834,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TowerList: []
-  DummyTower: {fileID: 7947368968500426283, guid: 6e34418418013c346a7db7e5218dff0e,
+  DummyTower: {fileID: 8339922564013674599, guid: 760fda170c696344b8c808e17973c453,
     type: 3}
 --- !u!4 &1163082788
 Transform:
@@ -1026,6 +1086,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: OptimizedTree Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 9034467268882758394, guid: 2c8a92648787e4f49819846a61333bbd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5499279779293770302, guid: 2c8a92648787e4f49819846a61333bbd,
         type: 3}

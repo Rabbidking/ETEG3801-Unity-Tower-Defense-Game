@@ -24,6 +24,9 @@ public class Tower : MonoBehaviour
     // Rotation Speed
     public float rotationSpeed = 35;
 
+    //ADDED FOR 2/29/DEMO by RyanTollefson
+    public MapGenerator mg;
+
     void Start()
     {
         //store all enemies that are in range
@@ -31,6 +34,8 @@ public class Tower : MonoBehaviour
 
         lastShotTime = Time.time;
         towerData = gameObject.GetComponentInChildren<Tower>();
+        //ADDED FOR 2/29/DEMO by RyanTollefson
+        mg = GameObject.Find("TileMapGroup").GetComponent<MapGenerator>();
     }
 
     public TowerLevel GetNextLevel()
@@ -101,7 +106,13 @@ public class Tower : MonoBehaviour
         float minimalEnemyDistance = float.MaxValue;
         foreach (GameObject enemy in enemiesInRange)
         {
-            float distanceToGoal = Vector3.Distance(enemy.transform.position, GameObject.Find("Castle").transform.position);
+            if (!enemy) continue;
+            //REMOVED FOR 2/29/DEMO by RyanTollefson
+            //float distanceToGoal = Vector3.Distance(enemy.transform.position, GameObject.Find("Castle").transform.position);
+
+            //ADDED FOR 2/29/DEMO by RyanTollefson
+            float distanceToGoal = Vector3.Distance(enemy.transform.position, mg.End);
+            
             if (distanceToGoal < minimalEnemyDistance)
             {
                 target = enemy;
@@ -153,8 +164,8 @@ public class Tower : MonoBehaviour
             //g.GetComponent<Bullet>().target = other.transform;
 
             enemiesInRange.Add(other.gameObject);
-            EnemyDestructionDelegate del = other.gameObject.GetComponent<EnemyDestructionDelegate>();
-            del.enemyDelegate += OnEnemyDestroy;
+            //EnemyDestructionDelegate del = other.gameObject.GetComponent<EnemyDestructionDelegate>();
+            //del.enemyDelegate += OnEnemyDestroy;
         }
     }
     // 3
@@ -163,8 +174,8 @@ public class Tower : MonoBehaviour
         if (other.gameObject.tag.Equals("Enemy"))
         {
             enemiesInRange.Remove(other.gameObject);
-            EnemyDestructionDelegate del = other.gameObject.GetComponent<EnemyDestructionDelegate>();
-            del.enemyDelegate -= OnEnemyDestroy;
+           // EnemyDestructionDelegate del = other.gameObject.GetComponent<EnemyDestructionDelegate>();
+          //  del.enemyDelegate -= OnEnemyDestroy;
         }
     }
 }

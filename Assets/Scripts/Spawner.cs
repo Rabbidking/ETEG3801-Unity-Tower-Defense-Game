@@ -16,20 +16,29 @@ public class Spawner : MonoBehaviour
 		Endpos.y += 2f;
 		nma.transform.position = Startpos;
 		InvokeRepeating("SpawnNext", 5.0f, 5.0f);
+
+         
 	}
 
 	void SpawnNext()
 	{
-		enemies.Add(Instantiate(nma, Startpos, Quaternion.identity));
-	}
+        //Commited out for  2/28/2019 demo
+        //enemies.Add(Instantiate(nma, Startpos, Quaternion.identity));
+
+        NavMeshAgent obj = Instantiate(nma, Startpos, Quaternion.identity);
+        enemies.Add(obj);
+        obj.SetDestination(Endpos);
+    }
 
 
-	// Update is called once per frame
-	void Update()
+    // Update is called once per frame
+    void Update()
     {
+        /*Commited out for  2/28/2019 demo
 		foreach(NavMeshAgent nmas in enemies)
 		{
 			nmas.SetDestination(Endpos);
 		}
+        */
     }
 }
