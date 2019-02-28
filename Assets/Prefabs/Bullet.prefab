@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93947cb6453bc39479c69e2a3d288322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  target: {fileID: 3948812816598467923, guid: aa81d7f1fbb5d2e438b4aed6551ff537, type: 3}
+  speed: 50
+  target: {fileID: 0}
   startPosition: {x: 0, y: 0, z: 0}
   targetPosition: {x: 0, y: 0, z: 0}

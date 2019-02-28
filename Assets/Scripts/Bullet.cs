@@ -14,7 +14,7 @@ public class Bullet : MonoBehaviour
     public Vector3 targetPosition;
     private float distance;
     private float startTime;
-
+    
     void Start()
     {
         startTime = Time.time;
@@ -39,7 +39,8 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
-        float timeInterval = Time.time - startTime;
+        transform.position += (targetPosition - startPosition).normalized * speed * Time.deltaTime;
+        /*float timeInterval = Time.time - startTime;
         gameObject.transform.position = Vector3.Lerp(startPosition, targetPosition, timeInterval * speed / distance);
 
         if ((gameObject.transform.position - targetPosition).sqrMagnitude < 0.01 )
@@ -58,7 +59,7 @@ public class Bullet : MonoBehaviour
                     AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);
 
                     //gameManager.Gold += 50;
-                }*/
+                }
 
                 // Fly towards the target
                 Vector3 dir = target.transform.position - transform.position;
@@ -70,7 +71,7 @@ public class Bullet : MonoBehaviour
                 // Otherwise destroy self
                 Destroy(gameObject);
             }
-        }
+        }*/
     }
 
     void OnTriggerEnter(Collider co)
