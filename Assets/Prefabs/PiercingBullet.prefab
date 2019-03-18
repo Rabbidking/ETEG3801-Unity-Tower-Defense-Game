@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8339922564013674599
+--- !u!1 &3324109832481485376
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,48 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8339922564013674594}
-  - component: {fileID: 8339922564013674595}
-  - component: {fileID: 8339922564013674596}
-  - component: {fileID: 8339922564013674597}
-  - component: {fileID: 8339922564013674598}
-  m_Layer: 2
-  m_Name: Tower
+  - component: {fileID: 2161859070113572382}
+  - component: {fileID: 7706249328171926723}
+  - component: {fileID: 2441230902967193382}
+  - component: {fileID: 639393411475716335}
+  - component: {fileID: 3210595137362317324}
+  - component: {fileID: 4591914078900567940}
+  m_Layer: 0
+  m_Name: PiercingBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8339922564013674594
+--- !u!4 &2161859070113572382
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8339922564013674599}
-  m_LocalRotation: {x: 0.35355338, y: -0.1464466, z: 0.35355338, w: 0.8535535}
+  m_GameObject: {fileID: 3324109832481485376}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 45}
---- !u!33 &8339922564013674595
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &7706249328171926723
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8339922564013674599}
+  m_GameObject: {fileID: 3324109832481485376}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &8339922564013674596
+--- !u!23 &2441230902967193382
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8339922564013674599}
+  m_GameObject: {fileID: 3324109832481485376}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -59,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 6da153eec64e1934298f390fee483004, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79,37 +80,49 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!135 &8339922564013674597
-SphereCollider:
+--- !u!65 &639393411475716335
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8339922564013674599}
+  m_GameObject: {fileID: 3324109832481485376}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 6
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8339922564013674598
+--- !u!54 &3210595137362317324
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3324109832481485376}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &4591914078900567940
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8339922564013674599}
+  m_GameObject: {fileID: 3324109832481485376}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a245b839f1cc754aacd5ad2011185a0, type: 3}
+  m_Script: {fileID: 11500000, guid: 50f87f52671143c4d9845e76286d5352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levels:
-  - cost: 0
-    fireRate: 3
-    visualization: {fileID: 8339922564013674599}
-  enemiesInRange: []
-  bulletPrefab: {fileID: 3324109832481485376, guid: 0790afb04f6e0674082d298f98e58a2c,
-    type: 3}
-  rotationSpeed: 35
-  mg: {fileID: 0}
+  speed: 25
+  target: {fileID: 5696136698999598768, guid: 4d21120117f976c4dae5cc4c348bcc17, type: 3}
+  startPosition: {x: 0, y: 0, z: 0}
+  targetPosition: {x: 0, y: 0, z: 0}
+  numPierce: 2
