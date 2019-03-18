@@ -47,7 +47,7 @@ public class MapGenerator : MonoBehaviour
 		buildMap.Tiles = new TILE_TYPE[gridSize, gridSize];
 		//buildMap.Tiles = new GameObject[gridSize, gridSize];
 
-		int x = gridSize / 2;//Random.Range(1, gridSize - 2);
+		int x = Random.Range(1, gridSize - 2);
 		int y = -1;
 		int steps = gridSize;
 		StartPos = new Vector3(0.5f, 0, (x + 0.5f));
@@ -155,13 +155,13 @@ public class MapGenerator : MonoBehaviour
 		List<NavMeshBuildMarkup> markups = new List<NavMeshBuildMarkup>();
 		NavMeshBuilder.CollectSources(new Bounds(Vector3.zero, Vector3.one * 1000), 0 | (1 << 9), NavMeshCollectGeometry.RenderMeshes, 0, markups, sourceList);
 		NavMeshBuildSettings nmbs = NavMesh.CreateSettings();
-		nmbs.agentTypeID = Spawner.nma.agentTypeID;
+		nmbs.agentTypeID = Spawner.nma[0].agentTypeID;
 		NavMeshData nmd = NavMeshBuilder.BuildNavMeshData(nmbs, sourceList, new Bounds(transform.position, Vector3.one * 1000), Vector3.zero, Quaternion.identity);
 
 		currentNavMesh = NavMesh.AddNavMeshData(nmd);
-		Spawner spawn = Instantiate(Spawner, StartPos, Quaternion.identity);
-		spawn.Startpos = StartPos;
-		spawn.Endpos = EndPos;
+		//Spawner spawn = Instantiate(Spawner, StartPos, Quaternion.identity);
+		Spawner.Startpos = StartPos;
+		Spawner.Endpos = EndPos;
 
 		endPoint.transform.position = EndPos + Vector3.up;
 		endPoint.transform.localScale = new Vector3(gridScale, 2, gridScale);

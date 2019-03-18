@@ -5,24 +5,14 @@ using UnityEngine.AI;
 
 public class Monster : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        // Navigate to Castle
+	// Start is called before the first frame update
+	public int HP;
+	public int speed;
+	private NavMeshAgent Enemy;
 
-        GameObject castle = GameObject.Find("Castle");
-        if (castle)
-            GetComponent<NavMeshAgent>().destination = castle.transform.position;
-    }
-
-    void OnTriggerEnter(Collider co)
-    {
-        // If castle then deal Damage
-        if (co.name == "Castle")
-        {
-            co.GetComponentInChildren<Health>().decrease();
-            Destroy(gameObject);
-        }
-    }
-
+	public void Start()
+	{
+		Enemy = GetComponent<NavMeshAgent>();
+		Enemy.speed = speed;
+	}
 }
