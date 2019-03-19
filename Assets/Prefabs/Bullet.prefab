@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3179382085023387909}
   m_Layer: 0
   m_Name: Bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -122,6 +122,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 50
-  target: {fileID: 5696136698999598768, guid: 4d21120117f976c4dae5cc4c348bcc17, type: 3}
+  target:
+  - {fileID: 5696136698999598768, guid: 4d21120117f976c4dae5cc4c348bcc17, type: 3}
+  - {fileID: 5382625005573060722, guid: 373360d32fd16f444a8f4ffc2dcd266b, type: 3}
+  - {fileID: 3855060862719991348, guid: 78afe83343b907c459d70fbe6fdd8bfd, type: 3}
   startPosition: {x: 0, y: 0, z: 0}
   targetPosition: {x: 0, y: 0, z: 0}

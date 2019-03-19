@@ -140,7 +140,7 @@ public class Tower : MonoBehaviour
         GameObject newBullet = (GameObject)Instantiate(bulletPrefab);
         newBullet.transform.position = startPosition;
         Bullet bulletComp = newBullet.GetComponent<Bullet>();
-        bulletComp.target = target.gameObject;
+        //bulletComp.target = target.gameObject;
         bulletComp.startPosition = startPosition;
         bulletComp.targetPosition = targetPosition;
         GameObject.Destroy(newBullet, 3);

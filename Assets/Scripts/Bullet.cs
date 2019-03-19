@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     public float speed = 10;
 
     // Target (set by Tower)
-    public GameObject target;
+    public List<GameObject> target;
 
     public Vector3 startPosition;
     public Vector3 targetPosition;
@@ -77,12 +77,14 @@ public class Bullet : MonoBehaviour
     void OnTriggerEnter(Collider co)
     {
         print(co);
-        Health health = co.GetComponentInChildren<Health>();
-        if(health)
+        
+		co.GetComponent<Monster>().loseHP();
+		int health = co.GetComponent<Monster>().HP;
+		if (health<=0)
         {
-            health.decrease();
-            Destroy(gameObject);
+			Destroy(co.gameObject);
         }
+		Destroy(gameObject);
         
     }
 }

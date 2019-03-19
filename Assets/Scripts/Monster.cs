@@ -15,4 +15,8 @@ public class Monster : MonoBehaviour
 		Enemy = GetComponent<NavMeshAgent>();
 		Enemy.speed = speed;
 	}
+	public void loseHP()
+	{
+		HP -= 5;
+	}
 }
