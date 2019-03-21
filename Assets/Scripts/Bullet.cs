@@ -14,9 +14,11 @@ public class Bullet : MonoBehaviour
     public Vector3 targetPosition;
     private float distance;
     private float startTime;
+	public GameObject rm;
     
     void Start()
     {
+		rm = GameObject.FindWithTag("ResourceManager");
         startTime = Time.time;
         distance = Vector3.Distance(startPosition, targetPosition);
     }
@@ -82,8 +84,10 @@ public class Bullet : MonoBehaviour
 		int health = co.GetComponent<Monster>().HP;
 		if (health<=0)
         {
+			rm.gameObject.GetComponent<ResourceManager>().PlayerGold += co.gameObject.GetComponent<Monster>().MoneyReturn;
+			rm.gameObject.GetComponent<ResourceManager>().UpdateGoldText();
 			Destroy(co.gameObject);
-        }
+		}
 		Destroy(gameObject);
         
     }

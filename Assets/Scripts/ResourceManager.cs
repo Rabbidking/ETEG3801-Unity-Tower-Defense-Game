@@ -11,13 +11,20 @@ public class ResourceManager : MonoBehaviour
     private void Start()
     {
 		CurWave = 1;
-        UpdateResourceText();
+        UpdateHPText();
+        UpdateGoldText();
+        UpdateWaveText();
     }
-
-    public void UpdateResourceText()
+	public void UpdateHPText()
     {
         PlayerHealthText.text = "[HEALTH]: "   + PlayerHealth.ToString();
+    }
+	public void UpdateGoldText()
+    {
         PlayerGoldText.text   = "[GOLD]:     " + PlayerGold.ToString();
+    }
+	public void UpdateWaveText()
+    {
 		CurWaveText.text = "[Wave]:       " + CurWave.ToString();
     }
 

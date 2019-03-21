@@ -33,6 +33,8 @@ public class Spawner : MonoBehaviour
 	
 
 	IEnumerator SpawnWave() {
+		WaveMaster.CurWave++;
+		WaveMaster.UpdateWaveText();
 		for (int i = 0; i < waveVal; i++)
 		{
 			waveinfo wi;
@@ -57,8 +59,7 @@ public class Spawner : MonoBehaviour
 			yield return new WaitForSeconds(1);
 		}
 		Wave = new List<waveinfo>();
-		WaveMaster.CurWave++;
-		WaveMaster.UpdateResourceText();
+		
 		isWave = false;
 	}
 

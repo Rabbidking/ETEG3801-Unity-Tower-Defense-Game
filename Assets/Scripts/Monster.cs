@@ -8,6 +8,7 @@ public class Monster : MonoBehaviour
 	// Start is called before the first frame update
 	public int HP;
 	public int speed;
+	public int MoneyReturn;
 	private NavMeshAgent Enemy;
 
 	public void Start()
