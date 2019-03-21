@@ -82,9 +82,30 @@ public class BuildMap : MonoBehaviour
                 DeselectTile();
             else
             {
-                if(Input.GetKeyDown("b"))
+                //build tower
+                if (Input.GetKeyDown("b"))
                     SpawnTower();
-                else if(Input.GetKeyDown("d"))
+
+                //upgrade tower
+                else if (Input.GetKeyDown("u"))
+                {
+                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN)
+                    {
+                        foreach (TileObject TO in TileObjects)
+                        {
+                            if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
+                            {
+                                Destroy(TO.mGameObject);
+                                TileObjects.Remove(TO);
+                                SpawnTower(TO.mGameObject.GetComponent<Tower>().CurrentLevel++);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                //destroy tower
+                else if (Input.GetKeyDown("d"))
                     DestroyTower();
             }
         }
@@ -148,7 +169,7 @@ public class BuildMap : MonoBehaviour
             MapCursorRenderer.material.color = Color.red;
     }
 
-    private void SpawnTower()
+    private void SpawnTower(int curLevel = 0)
     {
         if(Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.BUILDABLE && GoldMaster.PlayerGold >= DummyTowerCost)
         {
@@ -159,7 +180,7 @@ public class BuildMap : MonoBehaviour
             float newX, newZ;
             GetTileCenter(SelectedTile[0], SelectedTile[1], out newX, out newZ);
 
-            newTower.mGameObject = Instantiate(TowerPrefabs.DummyTower);
+            newTower.mGameObject = Instantiate(TowerPrefabs.DummyTower.GetComponent<Tower>().levels[curLevel].visualization);
             newTower.mGameObject.transform.SetParent(TowerParent.transform, false);
             newTower.mGameObject.transform.localPosition = new Vector3(newZ, MapHeight + 0.5f, newX);
             newTower.mGameObject.transform.localScale = new Vector3(TileSize * 0.9f, 1, TileSize * 0.9f);
@@ -167,6 +188,7 @@ public class BuildMap : MonoBehaviour
 
             Tiles[SelectedTile[0], SelectedTile[1]] = TILE_TYPE.TAKEN;
 
+            DummyTowerCost = TowerPrefabs.DummyTower.GetComponent<Tower>().levels[0].cost;
             GoldMaster.PlayerGold -= DummyTowerCost;
             GoldMaster.UpdateResourceText();
         }

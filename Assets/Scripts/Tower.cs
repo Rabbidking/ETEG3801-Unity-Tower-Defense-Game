@@ -8,18 +8,16 @@ public class TowerLevel
     public int cost;
     public float fireRate;
     public GameObject visualization;
+    public GameObject bulletPrefab;
 }
 
 public class Tower : MonoBehaviour
 {
     public List<TowerLevel> levels;
-    private TowerLevel currentLevel;
+    private int currentLevel;
     public List<GameObject> enemiesInRange;
     private float lastShotTime;
     private Tower towerData;
-
-    // The Bullet
-    public GameObject bulletPrefab;
 
     // Rotation Speed
     public float rotationSpeed = 35;
@@ -32,6 +30,8 @@ public class Tower : MonoBehaviour
         //store all enemies that are in range
         enemiesInRange = new List<GameObject>();
 
+        currentLevel = 0;
+
         lastShotTime = Time.time;
         towerData = gameObject.GetComponentInChildren<Tower>();
         //ADDED FOR 2/29/DEMO by RyanTollefson
@@ -40,7 +40,7 @@ public class Tower : MonoBehaviour
 
     public TowerLevel GetNextLevel()
     {
-        int currentLevelIndex = levels.IndexOf(currentLevel);
+        int currentLevelIndex = levels.IndexOf(levels[currentLevel]);
         int maxLevelIndex = levels.Count - 1;
         if (currentLevelIndex < maxLevelIndex)
         {
@@ -54,15 +54,15 @@ public class Tower : MonoBehaviour
 
     public void IncreaseLevel()
     {
-        int currentLevelIndex = levels.IndexOf(currentLevel);
+        int currentLevelIndex = levels.IndexOf((levels[currentLevel]));
         if (currentLevelIndex < levels.Count - 1)
         {
-            CurrentLevel = levels[currentLevelIndex + 1];
+            CurrentLevel = currentLevel + 1;
         }
     }
 
 
-    public TowerLevel CurrentLevel
+    public int CurrentLevel
     {
         get
         {
@@ -71,7 +71,7 @@ public class Tower : MonoBehaviour
         set
         {
             currentLevel = value;
-            int currentLevelIndex = levels.IndexOf(currentLevel);
+            int currentLevelIndex = levels.IndexOf((levels[currentLevel]));
 
             GameObject levelVisualization = levels[currentLevelIndex].visualization;
             for (int i = 0; i < levels.Count; i++)
@@ -93,7 +93,7 @@ public class Tower : MonoBehaviour
 
     void OnEnable()
     {
-        CurrentLevel = levels[0];
+        CurrentLevel = 0;
     }
 
     void Update()
@@ -107,8 +107,6 @@ public class Tower : MonoBehaviour
         foreach (GameObject enemy in enemiesInRange)
         {
             if (!enemy) continue;
-            //REMOVED FOR 2/29/DEMO by RyanTollefson
-            //float distanceToGoal = Vector3.Distance(enemy.transform.position, GameObject.Find("Castle").transform.position);
 
             //ADDED FOR 2/29/DEMO by RyanTollefson
             float distanceToGoal = Vector3.Distance(enemy.transform.position, mg.EndPos);
@@ -119,10 +117,10 @@ public class Tower : MonoBehaviour
                 minimalEnemyDistance = distanceToGoal;
             }
         }
-        // 2
+
         if (target != null)
         {
-            if (Time.time - lastShotTime > towerData.CurrentLevel.fireRate)
+            if (Time.time - lastShotTime > towerData.levels[currentLevel].fireRate)
             {
                 Shoot(target);
                 lastShotTime = Time.time;
@@ -134,10 +132,8 @@ public class Tower : MonoBehaviour
     {
         Vector3 startPosition = gameObject.transform.position;
         Vector3 targetPosition = target.transform.position;
-        //startPosition = bulletPrefab.transform.position;
-        //targetPosition = bulletPrefab.transform.position;
 
-        GameObject newBullet = (GameObject)Instantiate(bulletPrefab);
+        GameObject newBullet = (GameObject)Instantiate(levels[currentLevel].bulletPrefab);
         newBullet.transform.position = startPosition;
         Bullet bulletComp = newBullet.GetComponent<Bullet>();
         //bulletComp.target = target.gameObject;
@@ -160,12 +156,7 @@ public class Tower : MonoBehaviour
         // 2
         if (other.gameObject.tag.Equals("Enemy"))
         {
-            //GameObject g = (GameObject)Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            //g.GetComponent<Bullet>().target = other.transform;
-
             enemiesInRange.Add(other.gameObject);
-            //EnemyDestructionDelegate del = other.gameObject.GetComponent<EnemyDestructionDelegate>();
-            //del.enemyDelegate += OnEnemyDestroy;
         }
     }
     // 3
@@ -174,8 +165,6 @@ public class Tower : MonoBehaviour
         if (other.gameObject.tag.Equals("Enemy"))
         {
             enemiesInRange.Remove(other.gameObject);
-           // EnemyDestructionDelegate del = other.gameObject.GetComponent<EnemyDestructionDelegate>();
-          //  del.enemyDelegate -= OnEnemyDestroy;
         }
     }
 }

@@ -21,56 +21,18 @@ public class Bullet : MonoBehaviour
         distance = Vector3.Distance(startPosition, targetPosition);
     }
 
-    /*void FixedUpdate()
-    {
-        // Still has a Target?
-        if (target)
-        {
-            // Fly towards the target
-            Vector3 dir = target.transform.position - transform.position;
-            GetComponent<Rigidbody>().velocity = dir.normalized * speed;
-        }
-        else
-        {
-            // Otherwise destroy self
-            Destroy(gameObject);
-        }
-    }*/
-
     void Update()
     {
         transform.position += (targetPosition - startPosition).normalized * speed * Time.deltaTime;
-        /*float timeInterval = Time.time - startTime;
-        gameObject.transform.position = Vector3.Lerp(startPosition, targetPosition, timeInterval * speed / distance);
-
-        if ((gameObject.transform.position - targetPosition).sqrMagnitude < 0.01 )
+        /*
+        if (health.current() <= 0)
         {
-            if (target != null)
-            {
-                
-                /*Transform healthBarTransform = target.transform.Find("Health");
-                Health health = healthBarTransform.gameObject.GetComponent<Health>();
-                health.decrease();
+            Destroy(target);
+            AudioSource audioSource = target.GetComponent<AudioSource>();
+            AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);
 
-                if (health.current() <= 0)
-                {
-                    Destroy(target);
-                    AudioSource audioSource = target.GetComponent<AudioSource>();
-                    AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);
-
-                    //gameManager.Gold += 50;
-                }
-
-                // Fly towards the target
-                Vector3 dir = target.transform.position - transform.position;
-                GetComponent<Rigidbody>().velocity = dir.normalized * speed;
-            }
-
-            else
-            {
-                // Otherwise destroy self
-                Destroy(gameObject);
-            }
+            //gameManager.Gold += 50;
+        }
         }*/
     }
 
