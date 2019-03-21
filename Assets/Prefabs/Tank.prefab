@@ -146,3 +146,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 20
   speed: 5
+  MoneyReturn: 40
