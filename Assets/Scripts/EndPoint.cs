@@ -11,7 +11,7 @@ public class EndPoint : MonoBehaviour
         if(other.tag == "Enemy"){
             GameObject.Destroy(other.gameObject);
             rm.PlayerHealth -= 10;
-            rm.UpdateResourceText();
+            rm.UpdateHPText();
             if (rm.PlayerHealth <= 0) {
 				GameObject.Find("TileMapGroup").GetComponent<MapGenerator>().CleanUp();
 				SceneManager.LoadScene(0);

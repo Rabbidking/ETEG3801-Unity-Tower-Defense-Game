@@ -20,6 +20,7 @@ public class BuildMap : MonoBehaviour
     private List<TileObject> TileObjects = new List<TileObject>();
 
     public TowerPrefabList TowerPrefabs;
+    public CameraController CamController;
     public Camera MapCamera;
     public int MapLayer;
 
@@ -60,8 +61,9 @@ public class BuildMap : MonoBehaviour
         MapCursorSelect.transform.localScale = new Vector3(TileSize * 0.93f, 0.01f, TileSize * 0.93f);
         MapCursorSelect.SetActive(false);
 
-        MapCamera.transform.position = new Vector3(0, MapSize, 0);
-        MapCamera.transform.rotation.SetLookRotation(new Vector3(90.0f, 0, 0));
+        CamController.transform.position = new Vector3(0, MapSize, 0);
+        CamController.transform.LookAt(new Vector3(0, -1.0f, 0));
+        CamController.SetResetValuesWithCurrentValues();
     }
 
     void Update()
@@ -190,7 +192,7 @@ public class BuildMap : MonoBehaviour
 
             DummyTowerCost = TowerPrefabs.DummyTower.GetComponent<Tower>().levels[0].cost;
             GoldMaster.PlayerGold -= DummyTowerCost;
-            GoldMaster.UpdateResourceText();
+            GoldMaster.UpdateGoldText();
         }
     }
 
@@ -211,7 +213,7 @@ public class BuildMap : MonoBehaviour
             Tiles[SelectedTile[0], SelectedTile[1]] = TILE_TYPE.BUILDABLE;
 
             GoldMaster.PlayerGold += (DummyTowerCost / 2);
-            GoldMaster.UpdateResourceText();
+            GoldMaster.UpdateGoldText();
         }
     }
 }
