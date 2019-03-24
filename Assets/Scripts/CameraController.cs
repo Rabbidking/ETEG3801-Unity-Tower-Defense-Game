@@ -2,11 +2,9 @@
 
 public class CameraController : MonoBehaviour
 {
-    public float axisDeadZone;
     public float moveSpeed, zoomSpeed, turnSpeed;
 
-    private float deltaX, deltaY;
-    private int deltaR;
+    private float deltaX, deltaY, deltaR, deltaZoom;
     private bool mouseSlide;
 
     private Vector3 resetPosition;
@@ -31,25 +29,26 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        deltaX = deltaY = deltaR = 0;
+        deltaR = 0;
 
         deltaX = Input.GetAxis("Horizontal");
         deltaY = Input.GetAxis("Vertical");
 
-        if (Input.GetKey(KeyCode.Q))
-            deltaR -= 1;
+        if(Input.GetKey(KeyCode.Q))
+            deltaR -= 1.0f;
         if(Input.GetKey(KeyCode.E))
-            deltaR += 1;
+            deltaR += 1.0f;
 
-        if(deltaX > axisDeadZone || deltaX < -axisDeadZone ||
-           deltaY > axisDeadZone || deltaY < -axisDeadZone ||
-           Input.mouseScrollDelta.y != 0)
-            transform.Translate(new Vector3(moveSpeed * deltaX * Time.deltaTime, moveSpeed * deltaY * Time.deltaTime, Input.mouseScrollDelta.y * zoomSpeed));
+        deltaR   += Input.GetAxis("Horizontal_2");
+        deltaZoom = Input.mouseScrollDelta.y + Input.GetAxis("Vertical_2");
+
+        if (deltaX != 0 || deltaY != 0 || deltaZoom != 0)
+            transform.Translate(new Vector3(moveSpeed * deltaX * Time.deltaTime, moveSpeed * deltaY * Time.deltaTime, deltaZoom * zoomSpeed));
 
         if(deltaR != 0)
             transform.Rotate(new Vector3(0, 0, turnSpeed * deltaR * Time.deltaTime));
 
-        if(Input.GetKeyDown(KeyCode.R))
+        if(Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.Joystick1Button8) || Input.GetKeyDown(KeyCode.Joystick1Button9))
         {
             transform.position = resetPosition;
             transform.rotation = resetRotation;
