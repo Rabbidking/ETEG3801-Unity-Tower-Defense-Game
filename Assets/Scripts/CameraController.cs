@@ -2,10 +2,11 @@
 
 public class CameraController : MonoBehaviour
 {
-    public float screenEdgeX, screenEdgeY;
+    public float axisDeadZone;
     public float moveSpeed, zoomSpeed, turnSpeed;
 
-    private int deltaX, deltaY;
+    private float deltaX, deltaY;
+    private int deltaR;
     private bool mouseSlide;
 
     private Vector3 resetPosition;
@@ -13,7 +14,6 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        mouseSlide = false;
         SetResetValues(transform.position, transform.rotation);
     }
 
@@ -31,54 +31,25 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        deltaX = deltaY = 0;
+        deltaX = deltaY = deltaR = 0;
 
-        if(mouseSlide)
-        {
-            if(Input.mousePosition.x <= screenEdgeX)
-                deltaX -= 1;
-            else if(Input.mousePosition.x >= Screen.height - screenEdgeX)
-                deltaX += 1;
+        deltaX = Input.GetAxis("Horizontal");
+        deltaY = Input.GetAxis("Vertical");
 
-            if(Input.mousePosition.y <= screenEdgeY)
-                deltaY -= 1;
-            else if(Input.mousePosition.y >= Screen.height - screenEdgeY)
-                deltaY += 1;
-        }
+        if (Input.GetKey(KeyCode.Q))
+            deltaR -= 1;
+        if(Input.GetKey(KeyCode.E))
+            deltaR += 1;
 
-        if(Input.GetKey(KeyCode.W))
-            deltaY += 1;
-        if(Input.GetKey(KeyCode.A))
-            deltaX -= 1;
-        if(Input.GetKey(KeyCode.S))
-            deltaY -= 1;
-        if(Input.GetKey(KeyCode.D))
-            deltaX += 1;
+        if(deltaX > axisDeadZone || deltaX < -axisDeadZone ||
+           deltaY > axisDeadZone || deltaY < -axisDeadZone ||
+           Input.mouseScrollDelta.y != 0)
+            transform.Translate(new Vector3(moveSpeed * deltaX * Time.deltaTime, moveSpeed * deltaY * Time.deltaTime, Input.mouseScrollDelta.y * zoomSpeed));
 
-        if(Input.GetMouseButton(2))
-        {
-            if(deltaX != 0)
-                transform.LookAt(transform.position + transform.forward + (transform.right * Time.deltaTime * turnSpeed * deltaX));
+        if(deltaR != 0)
+            transform.Rotate(new Vector3(0, 0, turnSpeed * deltaR * Time.deltaTime));
 
-            //if(deltaY != 0)
-            //    transform.LookAt(transform.position + transform.forward + (transform.up * Time.deltaTime * turnSpeed * deltaY));
-        }
-        else
-        {
-            if(deltaX != 0)
-                transform.position = transform.position + (transform.right * moveSpeed * 0.1f * deltaX);
-
-            if(deltaY != 0)
-                transform.position = transform.position + (transform.up * moveSpeed * 0.1f * deltaY);
-        }
-
-        if (Input.mouseScrollDelta.y != 0)
-            transform.position = transform.position + (transform.forward * (Input.mouseScrollDelta.y * zoomSpeed * 0.1f));
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-            mouseSlide = !mouseSlide;
-
-        if (Input.GetKeyDown(KeyCode.R))
+        if(Input.GetKeyDown(KeyCode.R))
         {
             transform.position = resetPosition;
             transform.rotation = resetRotation;
