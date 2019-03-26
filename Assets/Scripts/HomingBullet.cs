@@ -18,7 +18,8 @@ public class HomingBullet : Bullet
 
     void Start()
     {
-        target = GameObject.FindGameObjectWithTag("Enemy").transform;
+		rm = GameObject.FindWithTag("ResourceManager");
+		target = GameObject.FindGameObjectWithTag("Enemy").transform;
         transform.forward = target.position - transform.position;
     }
 

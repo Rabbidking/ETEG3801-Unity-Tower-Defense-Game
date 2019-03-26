@@ -108,7 +108,7 @@ MonoBehaviour:
   - cost: 100
     fireRate: 3
     visualization: {fileID: 8339922564013674599}
-    bulletPrefab: {fileID: 3324109832481485376, guid: ab0bdfc6f9a9f1c4cba7bdf0900f8922,
+    bulletPrefab: {fileID: 3324109832481485376, guid: 0790afb04f6e0674082d298f98e58a2c,
       type: 3}
   - cost: 150
     fireRate: 3
