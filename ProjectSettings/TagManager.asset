@@ -6,7 +6,11 @@ TagManager:
   tags:
   - Enemy
   - Bullet
+<<<<<<< HEAD
   - Tower0
+=======
+  - ResourceManager
+>>>>>>> 5ba2447507af4bfa691f43c07c2f1eadb24e0924
   layers:
   - Default
   - TransparentFX
