@@ -107,7 +107,7 @@ public class BuildMap : MonoBehaviour
                 }
 
                 //destroy tower
-                else if (Input.GetKeyDown("d"))
+                else if (Input.GetKeyDown("v"))
                     DestroyTower();
             }
         }

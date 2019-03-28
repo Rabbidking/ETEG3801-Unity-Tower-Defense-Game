@@ -38,13 +38,20 @@ public class Spawner : MonoBehaviour
 		for (int i = 0; i < waveVal; i++)
 		{
 			waveinfo wi;
-			wi.unitNum = Random.Range(0, nma.Count);
+			wi.unitNum = Random.Range(0, nma.Count-2);
 			if (wi.unitNum == 1)
 			{
 				wi.numToSpawn = 1;
 			}else{
 				wi.numToSpawn = Random.Range(1, 3);
 			}
+			Wave.Add(wi);
+		}
+		if(WaveMaster.CurWave %5 == 0)
+		{
+			waveinfo wi;
+			wi.unitNum = nma.Count - 1;
+			wi.numToSpawn = 1;
 			Wave.Add(wi);
 		}
 		waveVal += Random.Range(0, 4);
