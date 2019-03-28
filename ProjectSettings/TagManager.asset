@@ -3,14 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags:
-  - Enemy
-  - Bullet
-<<<<<<< HEAD
-  - Tower0
-=======
-  - ResourceManager
->>>>>>> 5ba2447507af4bfa691f43c07c2f1eadb24e0924
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -20,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - PostProcessing
+  - 
   - 
   - 
   - 
