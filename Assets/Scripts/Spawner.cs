@@ -66,7 +66,6 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		print("waveval: " + waveVal);
 		if (!isWave)
 		{
 			stime += Time.deltaTime;

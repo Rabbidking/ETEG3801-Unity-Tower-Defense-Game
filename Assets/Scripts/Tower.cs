@@ -7,7 +7,7 @@ public class TowerLevel
 {
     public int cost;
     public float fireRate;
-    public GameObject visualization;
+    //public GameObject visualization;
     public GameObject bulletPrefab;
 }
 
@@ -18,11 +18,15 @@ public class Tower : MonoBehaviour
     public List<GameObject> enemiesInRange;
     private float lastShotTime;
     private Tower towerData;
+    public Transform rotate;
+    public Transform firePosition;
+    //public bool useLaser = false;
+    public LineRenderer lineRenderer;
+    public GameObject rm;
 
     // Rotation Speed
     public float rotationSpeed = 35;
 
-    //ADDED FOR 2/29/DEMO by RyanTollefson
     public MapGenerator mg;
 
     void Start()
@@ -34,8 +38,8 @@ public class Tower : MonoBehaviour
 
         lastShotTime = Time.time;
         towerData = gameObject.GetComponentInChildren<Tower>();
-        //ADDED FOR 2/29/DEMO by RyanTollefson
         mg = GameObject.Find("TileMapGroup").GetComponent<MapGenerator>();
+        rm = GameObject.Find("ResourceManager");
     }
 
     public TowerLevel GetNextLevel()
@@ -73,7 +77,7 @@ public class Tower : MonoBehaviour
             currentLevel = value;
             int currentLevelIndex = levels.IndexOf((levels[currentLevel]));
 
-            GameObject levelVisualization = levels[currentLevelIndex].visualization;
+            /*GameObject levelVisualization = levels[currentLevelIndex].visualization;
             for (int i = 0; i < levels.Count; i++)
             {
                 if (levelVisualization != null)
@@ -87,7 +91,7 @@ public class Tower : MonoBehaviour
                         levels[i].visualization.SetActive(false);
                     }
                 }
-            }
+            }*/
         }
     }
 
@@ -99,16 +103,15 @@ public class Tower : MonoBehaviour
     void Update()
     {
         //rotate tower
-        transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed, Space.World);
+        //transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed, Space.World);
 
         GameObject target = null;
-        // 1
+
         float minimalEnemyDistance = float.MaxValue;
         foreach (GameObject enemy in enemiesInRange)
         {
             if (!enemy) continue;
 
-            //ADDED FOR 2/29/DEMO by RyanTollefson
             float distanceToGoal = Vector3.Distance(enemy.transform.position, mg.EndPos);
             
             if (distanceToGoal < minimalEnemyDistance)
@@ -120,11 +123,28 @@ public class Tower : MonoBehaviour
 
         if (target != null)
         {
+            //lock on to an enemy target, rotating to face it
+            Vector3 dir = target.transform.position - transform.position;
+            Quaternion lookRotation = Quaternion.LookRotation(dir);
+            Vector3 rotation = Quaternion.Lerp(rotate.rotation, lookRotation, Time.deltaTime * rotationSpeed).eulerAngles;
+            rotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+
+            //update the laser firing to track enemies every frame
+            lineRenderer.SetPosition(0, firePosition.transform.position);
+            lineRenderer.SetPosition(1, target.transform.position);
+
             if (Time.time - lastShotTime > towerData.levels[currentLevel].fireRate)
             {
                 Shoot(target);
+                target.GetComponent<Monster>().loseHP();
                 lastShotTime = Time.time;
             }
+        }
+        else
+        {
+            if (lineRenderer.enabled)
+                lineRenderer.enabled = false;
+            return;
         }
     }
 
@@ -133,17 +153,20 @@ public class Tower : MonoBehaviour
         Vector3 startPosition = gameObject.transform.position;
         Vector3 targetPosition = target.transform.position;
 
-        GameObject newBullet = (GameObject)Instantiate(levels[currentLevel].bulletPrefab);
-        newBullet.transform.position = startPosition;
+        /*GameObject newBullet = (GameObject)Instantiate(levels[currentLevel].bulletPrefab);
+        newBullet.transform.position = firePosition.transform.position;
         Bullet bulletComp = newBullet.GetComponent<Bullet>();
         //bulletComp.target = target.gameObject;
-        bulletComp.startPosition = startPosition;
+        bulletComp.startPosition = firePosition.transform.position;
         bulletComp.targetPosition = targetPosition;
         GameObject.Destroy(newBullet, 3);
         //Animator animator = towerData.CurrentLevel.visualization.GetComponent<Animator>();
         //animator.SetTrigger("fireShot");
         //AudioSource audioSource = gameObject.GetComponent<AudioSource>();
-        //audioSource.PlayOneShot(audioSource.clip);
+        //audioSource.PlayOneShot(audioSource.clip);*/
+
+        if (!lineRenderer.enabled)
+            lineRenderer.enabled = true;  
     }
 
     void OnEnemyDestroy(GameObject enemy)
@@ -153,13 +176,12 @@ public class Tower : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        // 2
+
         if (other.gameObject.tag.Equals("Enemy"))
         {
             enemiesInRange.Add(other.gameObject);
         }
     }
-    // 3
     void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag.Equals("Enemy"))

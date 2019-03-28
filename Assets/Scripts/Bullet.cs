@@ -26,16 +26,6 @@ public class Bullet : MonoBehaviour
     void Update()
     {
         transform.position += (targetPosition - startPosition).normalized * speed * Time.deltaTime;
-        /*
-        if (health.current() <= 0)
-        {
-            Destroy(target);
-            AudioSource audioSource = target.GetComponent<AudioSource>();
-            AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);
-
-            //gameManager.Gold += 50;
-        }
-        }*/
     }
 
     void OnTriggerEnter(Collider co)
@@ -49,6 +39,8 @@ public class Bullet : MonoBehaviour
 			rm.gameObject.GetComponent<ResourceManager>().PlayerGold += co.gameObject.GetComponent<Monster>().MoneyReturn;
 			rm.gameObject.GetComponent<ResourceManager>().UpdateGoldText();
 			Destroy(co.gameObject);
+            /*AudioSource audioSource = target.GetComponent<AudioSource>();
+            AudioSource.PlayClipAtPoint(audioSource.clip, transform.position);*/
 		}
 		Destroy(gameObject);
         

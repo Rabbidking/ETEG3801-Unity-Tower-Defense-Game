@@ -10,14 +10,27 @@ public class Monster : MonoBehaviour
 	public int speed;
 	public int MoneyReturn;
 	private NavMeshAgent Enemy;
+    public GameObject rm;
 
 	public void Start()
 	{
-		Enemy = GetComponent<NavMeshAgent>();
+        rm = GameObject.Find("ResourceManager");
+        Enemy = GetComponent<NavMeshAgent>();
 		Enemy.speed = speed;
 	}
 	public void loseHP()
 	{
-		HP -= 5;
+		HP -= 1;
 	}
+
+    public void Update()
+    {
+        if (HP <= 0)
+        {
+            rm.gameObject.GetComponent<ResourceManager>().PlayerGold += MoneyReturn;
+            rm.gameObject.GetComponent<ResourceManager>().UpdateGoldText();
+            Destroy(gameObject);
+        }
+
+    }
 }

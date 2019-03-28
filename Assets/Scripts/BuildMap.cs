@@ -182,10 +182,11 @@ public class BuildMap : MonoBehaviour
             float newX, newZ;
             GetTileCenter(SelectedTile[0], SelectedTile[1], out newX, out newZ);
 
-            newTower.mGameObject = Instantiate(TowerPrefabs.DummyTower.GetComponent<Tower>().levels[curLevel].visualization);
+            //newTower.mGameObject = Instantiate(TowerPrefabs.DummyTower.GetComponent<Tower>().levels[curLevel].visualization);
+            newTower.mGameObject = Instantiate(TowerPrefabs.DummyTower);
             newTower.mGameObject.transform.SetParent(TowerParent.transform, false);
             newTower.mGameObject.transform.localPosition = new Vector3(newZ, MapHeight + 0.5f, newX);
-            newTower.mGameObject.transform.localScale = new Vector3(TileSize * 0.9f, 1, TileSize * 0.9f);
+            //newTower.mGameObject.transform.localScale = new Vector3(TileSize * 0.9f, 1, TileSize * 0.9f);
             TileObjects.Add(newTower);
 
             Tiles[SelectedTile[0], SelectedTile[1]] = TILE_TYPE.TAKEN;
