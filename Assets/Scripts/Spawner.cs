@@ -60,6 +60,7 @@ public class Spawner : MonoBehaviour
 			for (int j = 0; j < Wave[i].numToSpawn; j++)
 			{
 				NavMeshAgent obj = Instantiate(nma[Wave[i].unitNum], Startpos, Quaternion.identity);
+				obj.tag = "Enemy";
 				enemies.Add(obj);
 				obj.SetDestination(Endpos);
 			}
