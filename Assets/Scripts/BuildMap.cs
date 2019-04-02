@@ -89,7 +89,7 @@ public class BuildMap : MonoBehaviour
                     SpawnTower();
 
                 //upgrade tower
-                else if (Input.GetKeyDown("u"))
+                else if (Input.GetKeyDown("1"))
                 {
                     if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN)
                     {
@@ -97,9 +97,53 @@ public class BuildMap : MonoBehaviour
                         {
                             if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
                             {
-                                Destroy(TO.mGameObject);
-                                TileObjects.Remove(TO);
-                                SpawnTower(TO.mGameObject.GetComponent<Tower>().CurrentLevel++);
+                                TO.mGameObject.GetComponent<Tower>().damageUpgrade();
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                else if (Input.GetKeyDown("2"))
+                {
+                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN)
+                    {
+                        foreach (TileObject TO in TileObjects)
+                        {
+                            if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
+                            {
+                                TO.mGameObject.GetComponent<Tower>().chargeRateUpgrade();
+                                break;
+                            }
+                        }
+                    }
+                }
+
+
+                else if (Input.GetKeyDown("3"))
+                {
+                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN)
+                    {
+                        foreach (TileObject TO in TileObjects)
+                        {
+                            if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
+                            {
+                                TO.mGameObject.GetComponent<Tower>().converterUpgrade();
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                else if (Input.GetKeyDown("4"))
+                {
+                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN)
+                    {
+                        foreach (TileObject TO in TileObjects)
+                        {
+                            if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
+                            {
+                                TO.mGameObject.GetComponent<Tower>().maxCapacityUpgrade();
                                 break;
                             }
                         }

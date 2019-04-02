@@ -16,18 +16,18 @@ public class Monster : MonoBehaviour
 
 	public void Start()
 	{
-<<<<<<< HEAD
+//<<<<<<< HEAD
         rm = GameObject.Find("ResourceManager");
         Enemy = GetComponent<NavMeshAgent>();
-=======
+//=======
 		Enemy = GetComponent<NavMeshAgent>();
 		HP = MaxHP;
->>>>>>> 5ba2447507af4bfa691f43c07c2f1eadb24e0924
+//>>>>>>> 5ba2447507af4bfa691f43c07c2f1eadb24e0924
 		Enemy.speed = speed;
 	}
-	public void loseHP()
+	public void loseHP(int dmg)
 	{
-		HP -= 1;
+		HP -= dmg;
 	}
 
     public void Update()

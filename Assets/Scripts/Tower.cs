@@ -7,8 +7,7 @@ public class TowerLevel
 {
     public int cost;
     public float fireRate;
-    //public GameObject visualization;
-    public GameObject bulletPrefab;
+    //public GameObject bulletPrefab;
 }
 
 public class Tower : MonoBehaviour
@@ -24,6 +23,14 @@ public class Tower : MonoBehaviour
     public LineRenderer lineRenderer;
     public GameObject rm;
 
+    public enum lens { NORMAL, PIERCE, SCATTER };
+    //capacitor is battery (fire rate). Once a charge value hits 100, fire.
+    public int lensType;
+    //capacitor = energy storage; converter = how much energy we can covert; targeting = multi-targeting; lens = type of laser
+    public float capacitor, converter, chargeRate;
+    public float maxCapacity = 100.00f;
+    public int damage;
+
     // Rotation Speed
     public float rotationSpeed = 35;
 
@@ -35,6 +42,7 @@ public class Tower : MonoBehaviour
         enemiesInRange = new List<GameObject>();
 
         currentLevel = 0;
+        damage = 1;
 
         lastShotTime = Time.time;
         towerData = gameObject.GetComponentInChildren<Tower>();
@@ -56,6 +64,9 @@ public class Tower : MonoBehaviour
         }
     }
 
+    //On upgrade, lower converter cost, increase damage / capacity. Two different functions each for converter and capacity (4 total)
+
+
     public void IncreaseLevel()
     {
         int currentLevelIndex = levels.IndexOf((levels[currentLevel]));
@@ -76,36 +87,52 @@ public class Tower : MonoBehaviour
         {
             currentLevel = value;
             int currentLevelIndex = levels.IndexOf((levels[currentLevel]));
-
-            /*GameObject levelVisualization = levels[currentLevelIndex].visualization;
-            for (int i = 0; i < levels.Count; i++)
-            {
-                if (levelVisualization != null)
-                {
-                    if (i == currentLevelIndex)
-                    {
-                        levels[i].visualization.SetActive(true);
-                    }
-                    else
-                    {
-                        levels[i].visualization.SetActive(false);
-                    }
-                }
-            }*/
         }
     }
 
     void OnEnable()
     {
         CurrentLevel = 0;
+        lensType = 0;
+        damage = 1;
+    }
+
+    public void damageUpgrade()
+    {
+        //increase damage and converter cost (optional increase cost?)
+        damage += 1;
+    }
+
+    public void converterUpgrade()
+    {
+        //lower converter cost. Optional?
+        converter -= 5;
+    }
+
+    public void maxCapacityUpgrade()
+    {
+        //increase maxCapacity
+        maxCapacity += 25;
+    }
+
+    public void chargeRateUpgrade()
+    {
+        //increase chargeRate speed
+        chargeRate += 5;
     }
 
     void Update()
     {
-        //rotate tower
-        //transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed, Space.World);
-
         GameObject target = null;
+
+        if (capacitor < maxCapacity)
+            capacitor += chargeRate * Time.deltaTime;
+
+        if(capacitor > maxCapacity)
+            capacitor = maxCapacity;
+
+        if (converter < 0)
+            converter = 0;
 
         float minimalEnemyDistance = float.MaxValue;
         foreach (GameObject enemy in enemiesInRange)
@@ -133,10 +160,11 @@ public class Tower : MonoBehaviour
             lineRenderer.SetPosition(0, firePosition.transform.position);
             lineRenderer.SetPosition(1, target.transform.position);
 
-            if (Time.time - lastShotTime > towerData.levels[currentLevel].fireRate)
+            if (Time.time - lastShotTime > towerData.levels[currentLevel].fireRate && capacitor >= converter)
             {
+                capacitor -= converter;
                 Shoot(target);
-                target.GetComponent<Monster>().loseHP();
+                target.GetComponent<Monster>().loseHP(damage);
                 lastShotTime = Time.time;
             }
         }
@@ -153,14 +181,6 @@ public class Tower : MonoBehaviour
         Vector3 startPosition = gameObject.transform.position;
         Vector3 targetPosition = target.transform.position;
 
-        /*GameObject newBullet = (GameObject)Instantiate(levels[currentLevel].bulletPrefab);
-        newBullet.transform.position = firePosition.transform.position;
-        Bullet bulletComp = newBullet.GetComponent<Bullet>();
-        //bulletComp.target = target.gameObject;
-        bulletComp.startPosition = firePosition.transform.position;
-        bulletComp.targetPosition = targetPosition;
-        GameObject.Destroy(newBullet, 3);
-        //Animator animator = towerData.CurrentLevel.visualization.GetComponent<Animator>();
         //animator.SetTrigger("fireShot");
         //AudioSource audioSource = gameObject.GetComponent<AudioSource>();
         //audioSource.PlayOneShot(audioSource.clip);*/

@@ -178,12 +178,16 @@ MonoBehaviour:
   levels:
   - cost: 250
     fireRate: 0.3
-    bulletPrefab: {fileID: 0}
   enemiesInRange: []
   rotate: {fileID: 5358865582914131931}
   firePosition: {fileID: 1828504544482443943}
   lineRenderer: {fileID: 441838030958477977}
   rm: {fileID: 0}
+  lensType: 0
+  capacitor: 0
+  converter: 10
+  chargeRate: 10
+  maxCapacity: 100
   rotationSpeed: 35
   mg: {fileID: 0}
 --- !u!135 &3530335273560777601

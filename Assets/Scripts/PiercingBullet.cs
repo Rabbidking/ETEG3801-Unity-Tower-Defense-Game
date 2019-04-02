@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PiercingBullet : Bullet
+public class PiercingBullet
 {
     public int numPierce = 2;
 
-    void OnTriggerEnter(Collider co)
+    /*void OnTriggerEnter(Collider co)
     {
         if(co.tag == "Enemy")
         {
@@ -26,5 +26,5 @@ public class PiercingBullet : Bullet
 				Destroy(gameObject);
 			}
 		}
-    }
+    }*/
 }
