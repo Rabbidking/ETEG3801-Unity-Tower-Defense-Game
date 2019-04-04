@@ -38,7 +38,7 @@ public class Spawner : MonoBehaviour
 		for (int i = 0; i < waveVal; i++)
 		{
 			waveinfo wi;
-			wi.unitNum = Random.Range(0, nma.Count-2);
+			wi.unitNum = Random.Range(0, 3);
 			if (wi.unitNum == 1)
 			{
 				wi.numToSpawn = 1;
@@ -50,7 +50,8 @@ public class Spawner : MonoBehaviour
 		if(WaveMaster.CurWave %5 == 0)
 		{
 			waveinfo wi;
-			wi.unitNum = nma.Count - 1;
+			wi.unitNum = Random.Range(4, nma.Count-1);
+			//wi.unitNum = nma.Count - 1;
 			wi.numToSpawn = 1;
 			Wave.Add(wi);
 		}
@@ -82,7 +83,7 @@ public class Spawner : MonoBehaviour
 			{
 				isWave = true;
 				stime = 0;
-				etime = 6;
+				etime = 30;
 				StartCoroutine(SpawnWave());
 			}
 		}
