@@ -14,6 +14,7 @@ public class BuildMap : MonoBehaviour
 {
     public ResourceManager GoldMaster;
     private int DummyTowerCost = 100;
+    public int upgradeCost = 100;
 
     //public char[,] Tiles;
     public TILE_TYPE[,] Tiles;
@@ -91,14 +92,14 @@ public class BuildMap : MonoBehaviour
                 //upgrade tower
                 else if (Input.GetKeyDown("1"))
                 {
-                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN)
+                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN && GoldMaster.PlayerGold >= upgradeCost)
                     {
                         foreach (TileObject TO in TileObjects)
                         {
                             if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
                             {
                                 TO.mGameObject.GetComponent<Tower>().damageUpgrade();
-                                GoldMaster.PlayerGold -= 100;
+                                GoldMaster.PlayerGold -= upgradeCost;
                                 GoldMaster.UpdateGoldText();
                                 break;
                             }
@@ -108,14 +109,14 @@ public class BuildMap : MonoBehaviour
 
                 else if (Input.GetKeyDown("2"))
                 {
-                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN)
+                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN && GoldMaster.PlayerGold >= upgradeCost)
                     {
                         foreach (TileObject TO in TileObjects)
                         {
                             if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
                             {
                                 TO.mGameObject.GetComponent<Tower>().chargeRateUpgrade();
-                                GoldMaster.PlayerGold -= 100;
+                                GoldMaster.PlayerGold -= upgradeCost;
                                 GoldMaster.UpdateGoldText();
                                 break;
                             }
@@ -126,14 +127,14 @@ public class BuildMap : MonoBehaviour
 
                 else if (Input.GetKeyDown("3"))
                 {
-                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN)
+                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN && GoldMaster.PlayerGold >= upgradeCost)
                     {
                         foreach (TileObject TO in TileObjects)
                         {
                             if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
                             {
                                 TO.mGameObject.GetComponent<Tower>().converterUpgrade();
-                                GoldMaster.PlayerGold -= 100;
+                                GoldMaster.PlayerGold -= upgradeCost;
                                 GoldMaster.UpdateGoldText();
                                 break;
                             }
@@ -143,14 +144,14 @@ public class BuildMap : MonoBehaviour
 
                 else if (Input.GetKeyDown("4"))
                 {
-                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN)
+                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN && GoldMaster.PlayerGold >= upgradeCost)
                     {
                         foreach (TileObject TO in TileObjects)
                         {
                             if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
                             {
                                 TO.mGameObject.GetComponent<Tower>().maxCapacityUpgrade();
-                                GoldMaster.PlayerGold -= 100;
+                                GoldMaster.PlayerGold -= upgradeCost;
                                 GoldMaster.UpdateGoldText();
                                 break;
                             }
