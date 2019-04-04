@@ -41,6 +41,10 @@ public class Tower : MonoBehaviour
 
     public MapGenerator mg;
 
+    //SFX
+    //public AudioClip fire1, fire2;
+    //public new AudioSource audio;
+
     void Start()
     {
         //store all enemies that are in range
@@ -53,6 +57,8 @@ public class Tower : MonoBehaviour
         towerData = gameObject.GetComponentInChildren<Tower>();
         mg = GameObject.Find("TileMapGroup").GetComponent<MapGenerator>();
         rm = GameObject.Find("ResourceManager");
+
+        //audio = towerData.GetComponent<AudioSource>();
     }
 
     public TowerLevel GetNextLevel()
@@ -109,7 +115,12 @@ public class Tower : MonoBehaviour
         if(damage >= 25)
         {
             lineRenderer.widthMultiplier = width;
+            //audio.clip = fire2;
         }
+        /*else
+        {
+            audio.clip = fire1;
+        }*/
     }
 
     public void converterUpgrade()
