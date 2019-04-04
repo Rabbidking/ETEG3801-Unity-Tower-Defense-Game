@@ -31,8 +31,13 @@ public class Tower : MonoBehaviour
     public float maxCapacity = 100.00f;
     public int damage;
 
+    //lineRenderer width
+    public float width = 2.0f;
+
     // Rotation Speed
     public float rotationSpeed = 35;
+
+    public int numPierce = 2;
 
     public MapGenerator mg;
 
@@ -100,7 +105,11 @@ public class Tower : MonoBehaviour
     public void damageUpgrade()
     {
         //increase damage and converter cost (optional increase cost?)
-        damage += 1;
+        damage += 5;
+        if(damage >= 25)
+        {
+            lineRenderer.widthMultiplier = width;
+        }
     }
 
     public void converterUpgrade()
@@ -168,6 +177,8 @@ public class Tower : MonoBehaviour
                 target.GetComponent<Monster>().loseHP(damage);
                 lastShotTime = Time.time;
             }
+            else
+                lineRenderer.enabled = false;
         }
         else
         {
