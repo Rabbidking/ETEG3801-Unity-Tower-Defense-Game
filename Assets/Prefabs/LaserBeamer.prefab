@@ -176,8 +176,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levels:
-  - cost: 250
-    fireRate: 0.3
+  - cost: 150
+    fireRate: 2
   enemiesInRange: []
   rotate: {fileID: 5358865582914131931}
   firePosition: {fileID: 1828504544482443943}

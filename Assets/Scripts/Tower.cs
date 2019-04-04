@@ -164,6 +164,7 @@ public class Tower : MonoBehaviour
             {
                 capacitor -= converter;
                 Shoot(target);
+                StartCoroutine(LineHandler());
                 target.GetComponent<Monster>().loseHP(damage);
                 lastShotTime = Time.time;
             }
@@ -176,6 +177,16 @@ public class Tower : MonoBehaviour
         }
     }
 
+    IEnumerator LineHandler()
+    {
+        int timeToDraw = 1;
+        if(Time.time - timeToDraw <= 0)
+        {
+            yield return new WaitForSeconds(1);
+            lineRenderer.enabled = false;
+        }
+    }
+
     void Shoot(GameObject target)
     {
         Vector3 startPosition = gameObject.transform.position;
@@ -184,6 +195,8 @@ public class Tower : MonoBehaviour
         //animator.SetTrigger("fireShot");
         //AudioSource audioSource = gameObject.GetComponent<AudioSource>();
         //audioSource.PlayOneShot(audioSource.clip);*/
+
+        StartCoroutine(LineHandler());
 
         if (!lineRenderer.enabled)
             lineRenderer.enabled = true;  
