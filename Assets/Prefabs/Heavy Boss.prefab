@@ -146,6 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHP: 200
   HP: 200
-  speed: 1
+  speed: 5
   Damage: 40
   MoneyReturn: 200
+  rm: {fileID: 0}

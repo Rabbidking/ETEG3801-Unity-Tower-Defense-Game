@@ -146,6 +146,7 @@ RectTransform:
   - {fileID: 979018279}
   - {fileID: 1388619181}
   - {fileID: 1122763057}
+  - {fileID: 1097899304}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -426,6 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GoldMaster: {fileID: 1205316017}
+  upgradeCost: 100
   TowerPrefabs: {fileID: 1163082787}
   CamController: {fileID: 1955642228}
   MapCamera: {fileID: 1734833822}
@@ -674,7 +676,7 @@ PrefabInstance:
     - target: {fileID: 7298065493668478016, guid: 3ce06576dbbfab34387f1d8de4ae1df3,
         type: 3}
       propertyPath: nma.Array.size
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7298065493668478016, guid: 3ce06576dbbfab34387f1d8de4ae1df3,
         type: 3}
@@ -685,19 +687,19 @@ PrefabInstance:
         type: 3}
       propertyPath: nma.Array.data[3]
       value: 
-      objectReference: {fileID: 3187489015279258486, guid: 9c0ebaa3237ad624d856242a3c171fb4,
+      objectReference: {fileID: 6192328029948527740, guid: 33ad6690d28f31946bef6fa832d40280,
         type: 3}
     - target: {fileID: 7298065493668478016, guid: 3ce06576dbbfab34387f1d8de4ae1df3,
         type: 3}
       propertyPath: nma.Array.data[4]
       value: 
-      objectReference: {fileID: 4549400292646049554, guid: 373360d32fd16f444a8f4ffc2dcd266b,
+      objectReference: {fileID: 3187489015279258486, guid: 9c0ebaa3237ad624d856242a3c171fb4,
         type: 3}
     - target: {fileID: 7298065493668478016, guid: 3ce06576dbbfab34387f1d8de4ae1df3,
         type: 3}
       propertyPath: nma.Array.data[5]
       value: 
-      objectReference: {fileID: 4549400292646049554, guid: 373360d32fd16f444a8f4ffc2dcd266b,
+      objectReference: {fileID: 2069334125485426364, guid: c46618191b137c4448f98dd34be8968d,
         type: 3}
     - target: {fileID: 7298065493668478016, guid: 3ce06576dbbfab34387f1d8de4ae1df3,
         type: 3}
@@ -1084,6 +1086,85 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1097899303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1097899304}
+  - component: {fileID: 1097899306}
+  - component: {fileID: 1097899305}
+  m_Layer: 5
+  m_Name: NextWaveText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1097899304
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097899303}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 93997777}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 5, y: -55}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0, y: 1}
+--- !u!114 &1097899305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097899303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!222 &1097899306
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097899303}
+  m_CullTransparentMesh: 0
 --- !u!1 &1122763056
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,7 +1199,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 10, y: 70}
+  m_AnchoredPosition: {x: 10, y: 170}
   m_SizeDelta: {x: 500, y: 30}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1122763058
@@ -1162,7 +1243,23 @@ MonoBehaviour:
 
     [Scroll Wheel]  : Zoom
 
-    [R]                   : Reset'
+    [R]                   : Reset
+
+    {Game Controls }
+
+    [B]                   : Build Tower
+
+    [V]                   : Destroy Tower
+
+    [1]                   : Upgrade Damage
+
+    [2]                   : Upgrade Charge Rate
+
+    [3]                   : Upgrade Converter
+
+    [4]                   : Upgrade Max Capacity
+
+    [M]                   : Spawn Next Wave'
 --- !u!222 &1122763059
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1249,9 +1346,13 @@ MonoBehaviour:
   PlayerHealth: 100
   PlayerGold: 1000
   CurWave: 1
+  nextWaveTime: 0
   PlayerHealthText: {fileID: 435343760}
   PlayerGoldText: {fileID: 979018277}
   CurWaveText: {fileID: 1388619179}
+  NextWaveText: {fileID: 1097899305}
+  spawner: {fileID: 0}
+  isWave: 0
 --- !u!4 &1205316018
 Transform:
   m_ObjectHideFlags: 0
