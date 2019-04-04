@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class ResourceManager : MonoBehaviour
 {
-    public int PlayerHealth, PlayerGold, CurWave;
-    public Text PlayerHealthText, PlayerGoldText, CurWaveText;
+	public int PlayerHealth, PlayerGold, CurWave;
+	public float nextWaveTime;
+    public Text PlayerHealthText, PlayerGoldText, CurWaveText, NextWaveText;
 	public GameObject spawner;
 	public bool isWave = false;
 
@@ -19,6 +20,7 @@ public class ResourceManager : MonoBehaviour
         UpdateHPText();
         UpdateGoldText();
         UpdateWaveText();
+		UpdateNextWaveText();
 		isWave = false;
     }
 	public void UpdateHPText()
@@ -33,11 +35,18 @@ public class ResourceManager : MonoBehaviour
     {
 		CurWaveText.text = "[Wave]:       " + CurWave.ToString();
     }
+	public void UpdateNextWaveText()
+	{
+		NextWaveText.text = "[WaveTime]:   " + ((int)nextWaveTime).ToString();
+	}
 	public void Update()
 	{
+		nextWaveTime = etime - stime;
+		UpdateNextWaveText();
 		if (!isWave)
 		{
 			stime += Time.deltaTime;
+			
 			if (stime >= etime)
 			{
 				isWave = true;
