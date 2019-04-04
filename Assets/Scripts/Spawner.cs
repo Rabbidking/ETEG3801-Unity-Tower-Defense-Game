@@ -32,7 +32,7 @@ public class Spawner : MonoBehaviour
 	}
 	
 
-	IEnumerator SpawnWave() {
+	public IEnumerator SpawnWave() {
 		WaveMaster.CurWave++;
 		WaveMaster.UpdateWaveText();
 		for (int i = 0; i < waveVal; i++)
@@ -69,23 +69,12 @@ public class Spawner : MonoBehaviour
 		}
 		Wave = new List<waveinfo>();
 		
-		isWave = false;
+		WaveMaster.isWave = false;
 	}
 
     // Update is called once per frame
     void Update()
     {
-		if (!isWave)
-		{
-			stime += Time.deltaTime;
-
-			if (stime >= etime)
-			{
-				isWave = true;
-				stime = 0;
-				etime = 30;
-				StartCoroutine(SpawnWave());
-			}
-		}
+		
 	}
 }

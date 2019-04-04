@@ -158,7 +158,10 @@ public class BuildMap : MonoBehaviour
                         }
                     }
                 }
-
+				else if (Input.GetKeyDown("m"))
+				{
+					GoldMaster.spawnWave();
+				}
                 //destroy tower
                 else if (Input.GetKeyDown("v"))
                     DestroyTower();

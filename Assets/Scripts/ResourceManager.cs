@@ -7,13 +7,19 @@ public class ResourceManager : MonoBehaviour
 {
     public int PlayerHealth, PlayerGold, CurWave;
     public Text PlayerHealthText, PlayerGoldText, CurWaveText;
+	public GameObject spawner;
+	public bool isWave = false;
 
-    private void Start()
+	float stime = 0f, etime = 30.0f;
+
+	private void Start()
     {
-		CurWave = 1;
+		spawner = GameObject.Find("EnemySpawner");
+		CurWave = 0;
         UpdateHPText();
         UpdateGoldText();
         UpdateWaveText();
+		isWave = false;
     }
 	public void UpdateHPText()
     {
@@ -27,5 +33,28 @@ public class ResourceManager : MonoBehaviour
     {
 		CurWaveText.text = "[Wave]:       " + CurWave.ToString();
     }
-
+	public void Update()
+	{
+		if (!isWave)
+		{
+			stime += Time.deltaTime;
+			if (stime >= etime)
+			{
+				isWave = true;
+				stime = 0;
+				etime = 30;
+				StartCoroutine(spawner.gameObject.GetComponent<Spawner>().SpawnWave());
+			}
+		}
+	}
+	public void spawnWave()
+	{
+		if (!isWave)
+		{
+			isWave = true;
+			stime = 0;
+			etime = 30;
+			StartCoroutine(spawner.gameObject.GetComponent<Spawner>().SpawnWave());
+		}
+	}
 }
