@@ -98,6 +98,8 @@ public class BuildMap : MonoBehaviour
                             if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
                             {
                                 TO.mGameObject.GetComponent<Tower>().damageUpgrade();
+                                GoldMaster.PlayerGold -= 100;
+                                GoldMaster.UpdateGoldText();
                                 break;
                             }
                         }
@@ -113,6 +115,8 @@ public class BuildMap : MonoBehaviour
                             if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
                             {
                                 TO.mGameObject.GetComponent<Tower>().chargeRateUpgrade();
+                                GoldMaster.PlayerGold -= 100;
+                                GoldMaster.UpdateGoldText();
                                 break;
                             }
                         }
@@ -129,6 +133,8 @@ public class BuildMap : MonoBehaviour
                             if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
                             {
                                 TO.mGameObject.GetComponent<Tower>().converterUpgrade();
+                                GoldMaster.PlayerGold -= 100;
+                                GoldMaster.UpdateGoldText();
                                 break;
                             }
                         }
@@ -144,6 +150,8 @@ public class BuildMap : MonoBehaviour
                             if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
                             {
                                 TO.mGameObject.GetComponent<Tower>().maxCapacityUpgrade();
+                                GoldMaster.PlayerGold -= 100;
+                                GoldMaster.UpdateGoldText();
                                 break;
                             }
                         }
