@@ -7,7 +7,7 @@ public class ManagerGame : MonoBehaviour
 {
     private Canvas[] myCanvases;
     private GameObject mTower;
-    private BuildMap buildMap;
+    public BuildMap buildMap;
     private ResourceManager RM;
 
     public UIManager UI;
@@ -34,10 +34,12 @@ public class ManagerGame : MonoBehaviour
         {
             myCanvases[2].enabled = true;
         }
+        else
+            myCanvases[2].enabled = false;
     }
     public void TogglePauseMenu()
     {
-        if (myCanvases[1].enabled == true)
+        if (myCanvases[0].enabled == true)
         {
             myCanvases[0].enabled = false;
             Time.timeScale = 1.0f;
@@ -55,7 +57,7 @@ public class ManagerGame : MonoBehaviour
         Quaternion selectedRotation = buildMap.MapCursorSelect.transform.rotation;
         Instantiate(mTower, selectedPos, selectedRotation);
     }*/
-    public void ToggleGameOver()
+   /* public void ToggleGameOver()
     {
         if (RM.PlayerHealth <= 0)
         {
@@ -63,7 +65,7 @@ public class ManagerGame : MonoBehaviour
             myCanvases[1].enabled = false;
             myCanvases[0].enabled = false;
         }
-    }
+    }*/
     public void updateConverterText()
     {
         ConverterText.text = "Upgrade Converter";

@@ -9,7 +9,7 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         ScanForKeyStroke();
-        gameManager.ToggleGameOver();
+        //gameManager.ToggleGameOver();
     }
     void ScanForKeyStroke()
     {
