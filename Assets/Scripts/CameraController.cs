@@ -43,9 +43,17 @@ public class CameraController : MonoBehaviour
         deltaZoom = Input.mouseScrollDelta.y + Input.GetAxis("Vertical_2");
 
         if (deltaX != 0 || deltaY != 0 || deltaZoom != 0)
-            transform.Translate(new Vector3(moveSpeed * deltaX * Time.deltaTime, moveSpeed * deltaY * Time.deltaTime, deltaZoom * zoomSpeed));
+            transform.Translate(new Vector3(moveSpeed * deltaX * Time.deltaTime, moveSpeed * deltaY * Time.deltaTime, moveSpeed * deltaZoom * Time.deltaTime));
 
-        if(deltaR != 0)
+        if (transform.localPosition.y < 80) {
+            transform.Translate(0, 0, transform.localPosition.y - 80);
+        }
+        if (transform.localPosition.y > 300)
+        {
+            transform.Translate(0, 0, transform.localPosition.y - 300);
+        }
+
+        if (deltaR != 0)
             transform.Rotate(new Vector3(0, 0, turnSpeed * deltaR * Time.deltaTime));
 
         if(Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.Joystick1Button8) || Input.GetKeyDown(KeyCode.Joystick1Button9))

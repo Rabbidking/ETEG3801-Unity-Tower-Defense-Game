@@ -149,3 +149,4 @@ MonoBehaviour:
   speed: 20
   Damage: 5
   MoneyReturn: 10
+  rm: {fileID: 0}

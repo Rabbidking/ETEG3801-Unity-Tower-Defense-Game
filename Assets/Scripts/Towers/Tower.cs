@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [System.Serializable]
 public class TowerLevel
@@ -158,8 +159,8 @@ public class Tower : MonoBehaviour
         foreach (GameObject enemy in enemiesInRange)
         {
             if (!enemy) continue;
-
-            float distanceToGoal = Vector3.Distance(enemy.transform.position, mg.EndPos);
+            NavMeshAgent na = enemy.GetComponent<NavMeshAgent>();
+            float distanceToGoal = Vector3.Distance(enemy.transform.position, na.destination);
             
             if (distanceToGoal < minimalEnemyDistance)
             {

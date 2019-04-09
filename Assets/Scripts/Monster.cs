@@ -30,8 +30,7 @@ public class Monster : MonoBehaviour
     {
         if (HP <= 0)
         {
-            rm.gameObject.GetComponent<ResourceManager>().PlayerGold += MoneyReturn;
-            rm.gameObject.GetComponent<ResourceManager>().UpdateGoldText();
+            ResourceManager.instance.PlayerGold += MoneyReturn;
             Destroy(gameObject);
         }
 
