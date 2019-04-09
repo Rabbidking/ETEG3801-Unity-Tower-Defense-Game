@@ -8,8 +8,6 @@ public class ManagerGame : MonoBehaviour
     private Canvas[] myCanvases;
     private GameObject mTower;
     public BuildMap buildMap;
-    private ResourceManager RM;
-
     public UIManager UI;
 
     public Text DamageText, CapacitorText, FireRateText, ConverterText;
@@ -30,7 +28,7 @@ public class ManagerGame : MonoBehaviour
     }
     void Update()
     {
-        if (buildMap.Tiles[buildMap.SelectedTile[0], buildMap.SelectedTile[1]] == TILE_TYPE.TAKEN)
+        if (buildMap.current && buildMap.current.tiles[buildMap.SelectedTile[0], buildMap.SelectedTile[1]] == TILE_TYPE.TAKEN)
         {
             myCanvases[2].enabled = true;
         }
@@ -59,7 +57,7 @@ public class ManagerGame : MonoBehaviour
     }*/
    /* public void ToggleGameOver()
     {
-        if (RM.PlayerHealth <= 0)
+        if (ResourceManager.instance.PlayerHealth <= 0)
         {
             myCanvases[2].enabled = true;
             myCanvases[1].enabled = false;
@@ -73,15 +71,14 @@ public class ManagerGame : MonoBehaviour
     }
     public void upgradeConverter()
     {
-        if (buildMap.Tiles[buildMap.SelectedTile[0], buildMap.SelectedTile[1]] == TILE_TYPE.TAKEN && RM.PlayerGold >= buildMap.upgradeCost)
+        if (buildMap.Tiles[buildMap.SelectedTile[0], buildMap.SelectedTile[1]] == TILE_TYPE.TAKEN && ResourceManager.instance.PlayerGold >= buildMap.upgradeCost)
         {
             foreach (TileObject TO in buildMap.TileObjects)
             {
                 if (TO.mTileX == buildMap.SelectedTile[0] && TO.mTileY == buildMap.SelectedTile[1])
                 {
                     TO.mGameObject.GetComponent<Tower>().converterUpgrade();
-                    RM.PlayerGold -= buildMap.upgradeCost;
-                    RM.UpdateGoldText();
+                    ResourceManager.instance.PlayerGold -= buildMap.upgradeCost;
                     break;
                 }
             }
@@ -89,15 +86,14 @@ public class ManagerGame : MonoBehaviour
     }
     public void upgradeFireRate()
     {
-        if ((buildMap.Tiles[buildMap.SelectedTile[0], buildMap.SelectedTile[1]] == TILE_TYPE.TAKEN && RM.PlayerGold >= buildMap.upgradeCost))
+        if ((buildMap.Tiles[buildMap.SelectedTile[0], buildMap.SelectedTile[1]] == TILE_TYPE.TAKEN && ResourceManager.instance.PlayerGold >= buildMap.upgradeCost))
         {
             foreach (TileObject TO in buildMap.TileObjects)
             {
                 if (TO.mTileX == buildMap.SelectedTile[0] && TO.mTileY == buildMap.SelectedTile[1])
                 {
                     TO.mGameObject.GetComponent<Tower>().chargeRateUpgrade();
-                    RM.PlayerGold -= buildMap.upgradeCost;
-                    RM.UpdateGoldText();
+                    ResourceManager.instance.PlayerGold -= buildMap.upgradeCost;
                     break;
                 }
             }
@@ -115,15 +111,14 @@ public class ManagerGame : MonoBehaviour
     }
     public void upgradeDamage()
     {
-        if (buildMap.Tiles[buildMap.SelectedTile[0], buildMap.SelectedTile[1]] == TILE_TYPE.TAKEN && RM.PlayerGold >= buildMap.upgradeCost)
+        if (buildMap.Tiles[buildMap.SelectedTile[0], buildMap.SelectedTile[1]] == TILE_TYPE.TAKEN && ResourceManager.instance.PlayerGold >= buildMap.upgradeCost)
         {
             foreach (TileObject TO in buildMap.TileObjects)
             {
                 if (TO.mTileX == buildMap.SelectedTile[0] && TO.mTileY == buildMap.SelectedTile[1])
                 {
                     TO.mGameObject.GetComponent<Tower>().damageUpgrade();
-                    RM.PlayerGold -= buildMap.upgradeCost;
-                    RM.UpdateGoldText();
+                    ResourceManager.instance.PlayerGold -= buildMap.upgradeCost;
                     break;
                 }
             }
@@ -141,15 +136,14 @@ public class ManagerGame : MonoBehaviour
     }
     public void upgradeCapacitor()
     {
-        if (buildMap.Tiles[buildMap.SelectedTile[0], buildMap.SelectedTile[1]] == TILE_TYPE.TAKEN && RM.PlayerGold >= buildMap.upgradeCost)
+        if (buildMap.Tiles[buildMap.SelectedTile[0], buildMap.SelectedTile[1]] == TILE_TYPE.TAKEN && ResourceManager.instance.PlayerGold >= buildMap.upgradeCost)
         {
             foreach (TileObject TO in buildMap.TileObjects)
             {
                 if (TO.mTileX == buildMap.SelectedTile[0] && TO.mTileY == buildMap.SelectedTile[1])
                 {
                     TO.mGameObject.GetComponent<Tower>().maxCapacityUpgrade();
-                    RM.PlayerGold -= buildMap.upgradeCost;
-                    RM.UpdateGoldText();
+                    ResourceManager.instance.PlayerGold -= buildMap.upgradeCost;
                     break;
                 }
             }

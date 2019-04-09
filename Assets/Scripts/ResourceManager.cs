@@ -1,69 +1,88 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ResourceManager : MonoBehaviour
 {
-	public int PlayerHealth, PlayerGold, CurWave;
-	public float nextWaveTime;
-    public Text PlayerHealthText, PlayerGoldText, CurWaveText, NextWaveText;
-	public GameObject spawner;
-	public bool isWave = false;
+    //Actual values
+    private int _health, _gold, _wave;
 
-	float stime = 0f, etime = 30.0f;
+    //Handle Text Resource read out here;
+    public int PlayerHealth {
+        get { return _health;}
+        set {
+            _health = value;
+            if (_health <= 0)
+            {
+                GameObject.Find("TileMapGroup").GetComponent<MapGenerator>().CleanUp();
+                SceneManager.LoadScene(0);
+            }
+            PlayerHealthText.text = "[HEALTH]: " + _health; }
+    }
+
+    public int PlayerGold {
+        get { return _gold; }
+        set { _gold = value; PlayerGoldText.text = "[GOLD]: " + _gold; }
+    }
+    public int CurWave {
+        get { return _wave; }
+        private set { _wave = value; CurWaveText.text = "[WAVE]: " + (_wave + 1); }
+    }
+    //What needs to be set in editor
+    public Spawner spawner;
+    public Text PlayerHealthText, PlayerGoldText, CurWaveText, NextWaveText;
+    public int StartHealth, StartGold, WaveTime;
+    [HideInInspector]
+	private bool isWave = false;
+    private float stime;
+    public static ResourceManager instance;
 
 	private void Start()
     {
-		spawner = GameObject.Find("EnemySpawner");
+		spawner = GameObject.Find("EnemySpawner").GetComponent<Spawner>();
 		CurWave = 0;
-        UpdateHPText();
-        UpdateGoldText();
-        UpdateWaveText();
-		UpdateNextWaveText();
+        PlayerHealth = StartHealth;
+        PlayerGold = StartGold;
+        stime = 0;
+        instance = this;
 		isWave = false;
     }
-	public void UpdateHPText()
-    {
-        PlayerHealthText.text = "[HEALTH]: "   + PlayerHealth.ToString();
-    }
-	public void UpdateGoldText()
-    {
-        PlayerGoldText.text   = "[GOLD]:     " + PlayerGold.ToString();
-    }
-	public void UpdateWaveText()
-    {
-		CurWaveText.text = "[Wave]:       " + CurWave.ToString();
-    }
-	public void UpdateNextWaveText()
-	{
-		NextWaveText.text = "[WaveTime]:   " + ((int)nextWaveTime).ToString();
-	}
+    
+
 	public void Update()
 	{
-		nextWaveTime = etime - stime;
-		UpdateNextWaveText();
-		if (!isWave)
-		{
-			stime += Time.deltaTime;
-			
-			if (stime >= etime)
-			{
-				isWave = true;
-				stime = 0;
-				etime = 30;
-				StartCoroutine(spawner.gameObject.GetComponent<Spawner>().SpawnWave());
-			}
-		}
+
+        if (!isWave)
+        {
+            NextWaveText.text = string.Format("[WAVE TIMER]: {0:N}", WaveTime - stime);
+            stime += Time.deltaTime;
+            if (stime >= WaveTime)
+            {
+                spawnWave();
+            }
+        }
+        else {
+            NextWaveText.text = "[WAVE TIMER]: IN PROGRESS";
+        }
 	}
+
 	public void spawnWave()
 	{
 		if (!isWave)
 		{
 			isWave = true;
 			stime = 0;
-			etime = 30;
-			StartCoroutine(spawner.gameObject.GetComponent<Spawner>().SpawnWave());
+			StartCoroutine(spawner.SpawnWave());
 		}
 	}
+
+    public void EndWave() {
+        isWave = false;
+        CurWave++;
+        if (CurWave % 5 == 0) {
+            MapGenerator.instance.Generate();
+        }
+    }
 }

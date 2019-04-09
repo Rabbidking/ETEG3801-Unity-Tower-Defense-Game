@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [System.Serializable]
 public class TowerLevel
@@ -41,6 +42,10 @@ public class Tower : MonoBehaviour
 
     public MapGenerator mg;
 
+    //SFX
+    //public AudioClip fire1, fire2;
+    //public new AudioSource audio;
+
     void Start()
     {
         //store all enemies that are in range
@@ -53,6 +58,8 @@ public class Tower : MonoBehaviour
         towerData = gameObject.GetComponentInChildren<Tower>();
         mg = GameObject.Find("TileMapGroup").GetComponent<MapGenerator>();
         rm = GameObject.Find("ResourceManager");
+
+        //audio = towerData.GetComponent<AudioSource>();
     }
 
     public TowerLevel GetNextLevel()
@@ -109,7 +116,12 @@ public class Tower : MonoBehaviour
         if(damage >= 25)
         {
             lineRenderer.widthMultiplier = width;
+            //audio.clip = fire2;
         }
+        /*else
+        {
+            audio.clip = fire1;
+        }*/
     }
 
     public void converterUpgrade()
@@ -147,8 +159,8 @@ public class Tower : MonoBehaviour
         foreach (GameObject enemy in enemiesInRange)
         {
             if (!enemy) continue;
-
-            float distanceToGoal = Vector3.Distance(enemy.transform.position, mg.EndPos);
+            NavMeshAgent na = enemy.GetComponent<NavMeshAgent>();
+            float distanceToGoal = Vector3.Distance(enemy.transform.position, na.destination);
             
             if (distanceToGoal < minimalEnemyDistance)
             {
@@ -204,8 +216,8 @@ public class Tower : MonoBehaviour
         Vector3 targetPosition = target.transform.position;
 
         //animator.SetTrigger("fireShot");
-        //AudioSource audioSource = gameObject.GetComponent<AudioSource>();
-        //audioSource.PlayOneShot(audioSource.clip);*/
+        AudioSource audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.PlayOneShot(audioSource.clip);
 
         StartCoroutine(LineHandler());
 

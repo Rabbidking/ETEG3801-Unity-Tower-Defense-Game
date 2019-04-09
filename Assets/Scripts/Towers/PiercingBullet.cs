@@ -16,8 +16,7 @@ public class PiercingBullet
 			int health = co.GetComponent<Monster>().HP;
 			if (health<= 0)
             {
-				rm.gameObject.GetComponent<ResourceManager>().PlayerGold += co.gameObject.GetComponent<Monster>().MoneyReturn;
-				rm.gameObject.GetComponent<ResourceManager>().UpdateGoldText();
+                ResourceManager.instance.PlayerGold += co.gameObject.GetComponent<Monster>().MoneyReturn;
 				Destroy(co.gameObject);
             }
 			if (numPierce <= 0)
