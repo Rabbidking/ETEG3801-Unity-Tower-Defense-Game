@@ -216,8 +216,8 @@ public class Tower : MonoBehaviour
         Vector3 targetPosition = target.transform.position;
 
         //animator.SetTrigger("fireShot");
-        //AudioSource audioSource = gameObject.GetComponent<AudioSource>();
-        //audioSource.PlayOneShot(audioSource.clip);*/
+        AudioSource audioSource = gameObject.GetComponent<AudioSource>();
+        audioSource.PlayOneShot(audioSource.clip);
 
         StartCoroutine(LineHandler());
 
