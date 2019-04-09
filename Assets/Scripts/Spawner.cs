@@ -10,9 +10,10 @@ public class Spawner : MonoBehaviour
 		public int unitNum;
 		public int numToSpawn;
 	}
-    
+
+	public ResourceManager WaveMaster;
 	public List<NavMeshAgent> nma;
-	public Vector3 Startpos;
+	public Vector3 Startpos, Endpos;
 	List<NavMeshAgent> enemies = new List<NavMeshAgent>();
 	float stime, etime = 4.0f;
 	List<waveinfo> Wave = new List<waveinfo>();
@@ -25,17 +26,19 @@ public class Spawner : MonoBehaviour
 		isWave = false;
 		waveVal = 5;
 		Startpos.y += 2f;
+		Endpos.y += 2f;
 		foreach(NavMeshAgent blah in nma)
 			blah.transform.position = Startpos;
 	}
 	
 
-	IEnumerator SpawnWave() {
-		ResourceManager.instance.CurWave++;
+	public IEnumerator SpawnWave() {
+		WaveMaster.CurWave++;
+		WaveMaster.UpdateWaveText();
 		for (int i = 0; i < waveVal; i++)
 		{
 			waveinfo wi;
-			wi.unitNum = Random.Range(0, nma.Count);
+			wi.unitNum = Random.Range(0, 3);
 			if (wi.unitNum == 1)
 			{
 				wi.numToSpawn = 1;
@@ -44,37 +47,34 @@ public class Spawner : MonoBehaviour
 			}
 			Wave.Add(wi);
 		}
+		if(WaveMaster.CurWave %5 == 0)
+		{
+			waveinfo wi;
+			wi.unitNum = Random.Range(4, nma.Count-1);
+			//wi.unitNum = nma.Count - 1;
+			wi.numToSpawn = 1;
+			Wave.Add(wi);
+		}
 		waveVal += Random.Range(0, 4);
 		for (int i = 0; i < Wave.Count; i++)
 		{
 			for (int j = 0; j < Wave[i].numToSpawn; j++)
 			{
 				NavMeshAgent obj = Instantiate(nma[Wave[i].unitNum], Startpos, Quaternion.identity);
+				obj.tag = "Enemy";
 				enemies.Add(obj);
-				obj.SetDestination(MapGenerator.instance.ends.Random().transform.position);
+				obj.SetDestination(Endpos);
 			}
 			yield return new WaitForSeconds(1);
 		}
 		Wave = new List<waveinfo>();
 		
-		isWave = false;
+		WaveMaster.isWave = false;
 	}
 
     // Update is called once per frame
     void Update()
     {
-		print("waveval: " + waveVal);
-		if (!isWave)
-		{
-			stime += Time.deltaTime;
-
-			if (stime >= etime)
-			{
-				isWave = true;
-				stime = 0;
-				etime = 6;
-				StartCoroutine(SpawnWave());
-			}
-		}
+		
 	}
 }

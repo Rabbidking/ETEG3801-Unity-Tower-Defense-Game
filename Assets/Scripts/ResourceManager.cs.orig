@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ResourceManager : MonoBehaviour
 {
-	public int PlayerHealth, PlayerGold, CurWave;
+    private int _health, _gold, _wave;
 	public float nextWaveTime;
     public Text PlayerHealthText, PlayerGoldText, CurWaveText, NextWaveText;
 	public GameObject spawner;
@@ -17,23 +17,32 @@ public class ResourceManager : MonoBehaviour
     {
 		spawner = GameObject.Find("EnemySpawner");
 		CurWave = 0;
-        UpdateHPText();
-        UpdateGoldText();
-        UpdateWaveText();
 		UpdateNextWaveText();
 		isWave = false;
+        {
+            _health = value;
+            PlayerHealthText.text = "[HEALTH]: " + _health;
+        }
     }
-	public void UpdateHPText()
+
+    public int PlayerGold
     {
-        PlayerHealthText.text = "[HEALTH]: "   + PlayerHealth.ToString();
+        get { return _gold; }
+        set
+        {
+            _gold = value;
+            PlayerGoldText.text = "[GOLD]: " + _gold;
+        }
     }
-	public void UpdateGoldText()
+
+    public int CurWave
     {
-        PlayerGoldText.text   = "[GOLD]:     " + PlayerGold.ToString();
-    }
-	public void UpdateWaveText()
-    {
-		CurWaveText.text = "[Wave]:       " + CurWave.ToString();
+        get { return _wave; }
+        set
+        {
+            _wave = value;
+            CurWaveText.text = "[GOLD]: " + _wave;
+        }
     }
 	public void UpdateNextWaveText()
 	{

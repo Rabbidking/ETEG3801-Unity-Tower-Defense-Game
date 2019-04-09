@@ -13,6 +13,7 @@ struct TileObject
 public class BuildMap : MonoBehaviour
 {
     private int DummyTowerCost = 100;
+    public int upgradeCost = 100;
 
     //public char[,] Tiles;
     public TILE_TYPE[,] Tiles;
@@ -91,25 +92,80 @@ public class BuildMap : MonoBehaviour
                     SpawnTower();
                 }
                 //upgrade tower
-                else if (Input.GetKeyDown("u"))
+                else if (Input.GetKeyDown("1"))
                 {
-                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN)
+                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN && GoldMaster.PlayerGold >= upgradeCost)
                     {
                         foreach (TileObject TO in TileObjects)
                         {
                             if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
                             {
-                                Destroy(TO.mGameObject);
-                                TileObjects.Remove(TO);
-                                SpawnTower(TO.mGameObject.GetComponent<Tower>().CurrentLevel++);
+                                TO.mGameObject.GetComponent<Tower>().damageUpgrade();
+                                GoldMaster.PlayerGold -= upgradeCost;
+                                GoldMaster.UpdateGoldText();
                                 break;
                             }
                         }
                     }
                 }
 
+                else if (Input.GetKeyDown("2"))
+                {
+                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN && GoldMaster.PlayerGold >= upgradeCost)
+                    {
+                        foreach (TileObject TO in TileObjects)
+                        {
+                            if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
+                            {
+                                TO.mGameObject.GetComponent<Tower>().chargeRateUpgrade();
+                                GoldMaster.PlayerGold -= upgradeCost;
+                                GoldMaster.UpdateGoldText();
+                                break;
+                            }
+                        }
+                    }
+                }
+
+
+                else if (Input.GetKeyDown("3"))
+                {
+                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN && GoldMaster.PlayerGold >= upgradeCost)
+                    {
+                        foreach (TileObject TO in TileObjects)
+                        {
+                            if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
+                            {
+                                TO.mGameObject.GetComponent<Tower>().converterUpgrade();
+                                GoldMaster.PlayerGold -= upgradeCost;
+                                GoldMaster.UpdateGoldText();
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                else if (Input.GetKeyDown("4"))
+                {
+                    if (Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.TAKEN && GoldMaster.PlayerGold >= upgradeCost)
+                    {
+                        foreach (TileObject TO in TileObjects)
+                        {
+                            if (TO.mTileX == SelectedTile[0] && TO.mTileY == SelectedTile[1])
+                            {
+                                TO.mGameObject.GetComponent<Tower>().maxCapacityUpgrade();
+                                GoldMaster.PlayerGold -= upgradeCost;
+                                GoldMaster.UpdateGoldText();
+                                break;
+                            }
+                        }
+                    }
+                }
+				else if (Input.GetKeyDown("m"))
+				{
+					GoldMaster.spawnWave();
+				}
                 //destroy tower
-                else if (Input.GetKeyDown("d"))
+                else if (Input.GetKeyDown("v"))
                     DestroyTower();
             }
         }
@@ -184,10 +240,11 @@ public class BuildMap : MonoBehaviour
             float newX, newZ;
             GetTileCenter(SelectedTile[0], SelectedTile[1], out newX, out newZ);
 
-            newTower.mGameObject = Instantiate(TowerPrefabs.DummyTower.GetComponent<Tower>().levels[curLevel].visualization);
+            //newTower.mGameObject = Instantiate(TowerPrefabs.DummyTower.GetComponent<Tower>().levels[curLevel].visualization);
+            newTower.mGameObject = Instantiate(TowerPrefabs.DummyTower);
             newTower.mGameObject.transform.SetParent(TowerParent.transform, false);
             newTower.mGameObject.transform.localPosition = new Vector3(newZ, MapHeight + 0.5f, newX);
-            newTower.mGameObject.transform.localScale = new Vector3(TileSize * 0.9f, 1, TileSize * 0.9f);
+            //newTower.mGameObject.transform.localScale = new Vector3(TileSize * 0.9f, 1, TileSize * 0.9f);
             TileObjects.Add(newTower);
 
             Tiles[SelectedTile[0], SelectedTile[1]] = TILE_TYPE.TAKEN;

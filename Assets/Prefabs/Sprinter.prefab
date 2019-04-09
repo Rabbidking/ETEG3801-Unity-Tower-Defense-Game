@@ -144,6 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20e9acf2fdfd9de4ba433676348bc3a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxHP: 5
   HP: 5
   speed: 20
+  Damage: 5
   MoneyReturn: 10
