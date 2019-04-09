@@ -10,10 +10,9 @@ public class Spawner : MonoBehaviour
 		public int unitNum;
 		public int numToSpawn;
 	}
-
-	public ResourceManager WaveMaster;
+    
 	public List<NavMeshAgent> nma;
-	public Vector3 Startpos, Endpos;
+	public Vector3 Startpos;
 	List<NavMeshAgent> enemies = new List<NavMeshAgent>();
 	float stime, etime = 4.0f;
 	List<waveinfo> Wave = new List<waveinfo>();
@@ -26,15 +25,13 @@ public class Spawner : MonoBehaviour
 		isWave = false;
 		waveVal = 5;
 		Startpos.y += 2f;
-		Endpos.y += 2f;
 		foreach(NavMeshAgent blah in nma)
 			blah.transform.position = Startpos;
 	}
 	
 
 	IEnumerator SpawnWave() {
-		WaveMaster.CurWave++;
-		WaveMaster.UpdateWaveText();
+		ResourceManager.instance.CurWave++;
 		for (int i = 0; i < waveVal; i++)
 		{
 			waveinfo wi;
@@ -54,7 +51,7 @@ public class Spawner : MonoBehaviour
 			{
 				NavMeshAgent obj = Instantiate(nma[Wave[i].unitNum], Startpos, Quaternion.identity);
 				enemies.Add(obj);
-				obj.SetDestination(Endpos);
+				obj.SetDestination(MapGenerator.instance.ends.Random().transform.position);
 			}
 			yield return new WaitForSeconds(1);
 		}

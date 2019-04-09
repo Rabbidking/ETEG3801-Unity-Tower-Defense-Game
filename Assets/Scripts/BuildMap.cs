@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TILE_TYPE{BUILDABLE, TAKEN, NO_BUILD, PATH};
+public enum TILE_TYPE{TAKEN, NO_BUILD, BUILDABLE, PATH };
 
 struct TileObject
 {
@@ -12,7 +12,6 @@ struct TileObject
 
 public class BuildMap : MonoBehaviour
 {
-    public ResourceManager GoldMaster;
     private int DummyTowerCost = 100;
 
     //public char[,] Tiles;
@@ -41,6 +40,7 @@ public class BuildMap : MonoBehaviour
         MapSize     = mapSize;
         MapGridSize = mapGridSize;
         MapHeight   = mapHeight;
+        Tiles = new TILE_TYPE[mapGridSize, mapGridSize];
     }
 
     public void FinishSetup()
@@ -86,8 +86,10 @@ public class BuildMap : MonoBehaviour
             {
                 //build tower
                 if (Input.GetKeyDown("b"))
+                {
+                    print("sfa");
                     SpawnTower();
-
+                }
                 //upgrade tower
                 else if (Input.GetKeyDown("u"))
                 {
@@ -173,7 +175,7 @@ public class BuildMap : MonoBehaviour
 
     private void SpawnTower(int curLevel = 0)
     {
-        if(Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.BUILDABLE && GoldMaster.PlayerGold >= DummyTowerCost)
+        if(Tiles[SelectedTile[0], SelectedTile[1]] == TILE_TYPE.BUILDABLE && ResourceManager.instance.PlayerGold >= DummyTowerCost)
         {
             TileObject newTower;
             newTower.mTileX = SelectedTile[0];
@@ -191,8 +193,7 @@ public class BuildMap : MonoBehaviour
             Tiles[SelectedTile[0], SelectedTile[1]] = TILE_TYPE.TAKEN;
 
             DummyTowerCost = TowerPrefabs.DummyTower.GetComponent<Tower>().levels[0].cost;
-            GoldMaster.PlayerGold -= DummyTowerCost;
-            GoldMaster.UpdateGoldText();
+            ResourceManager.instance.PlayerGold -= DummyTowerCost;
         }
     }
 
@@ -212,8 +213,7 @@ public class BuildMap : MonoBehaviour
 
             Tiles[SelectedTile[0], SelectedTile[1]] = TILE_TYPE.BUILDABLE;
 
-            GoldMaster.PlayerGold += (DummyTowerCost / 2);
-            GoldMaster.UpdateGoldText();
+            ResourceManager.instance.PlayerGold += (DummyTowerCost / 2);
         }
     }
 }

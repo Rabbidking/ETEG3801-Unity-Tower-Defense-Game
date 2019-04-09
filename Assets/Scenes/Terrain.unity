@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -425,7 +425,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e88885d7f70f47d4b8e87eecea38f3fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GoldMaster: {fileID: 1205316017}
   TowerPrefabs: {fileID: 1163082787}
   CamController: {fileID: 1955642228}
   MapCamera: {fileID: 1734833822}
@@ -478,7 +477,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89f26cf298f74954b9d8b437d61ea4e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rm: {fileID: 1205316017}
+  x: 0
+  y: 0
+  terrianX: 0
+  terrianY: 0
 --- !u!65 &692365765
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -516,7 +518,6 @@ GameObject:
   m_Component:
   - component: {fileID: 784420065}
   - component: {fileID: 784420064}
-  - component: {fileID: 784420066}
   m_Layer: 0
   m_Name: TileMapGroup
   m_TagString: Untagged
@@ -546,9 +547,9 @@ MonoBehaviour:
   current: {fileID: 0}
   buildMap: {fileID: 466419920}
   StartPos: {x: 0, y: 0, z: 0}
-  EndPos: {x: 0, y: 0, z: 0}
   Spawner: {fileID: 243223907}
-  endPoint: {fileID: 692365763}
+  endpointPrefab: {fileID: 0}
+  ds: []
 --- !u!4 &784420065
 Transform:
   m_ObjectHideFlags: 0
@@ -568,18 +569,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &784420066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 784420063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c692aed0a43be6440a467d182fee7297, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &979018276
 GameObject:
   m_ObjectHideFlags: 0
@@ -1055,9 +1044,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db5762001bf42d74fb85a2030037cac0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerHealth: 100
-  PlayerGold: 1000
-  CurWave: 1
+  startingHealth: 100
+  startingGold: 1000
   PlayerHealthText: {fileID: 435343760}
   PlayerGoldText: {fileID: 979018277}
   CurWaveText: {fileID: 1388619179}
@@ -1376,7 +1364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a59e6875d68fd31439752cdc5612afcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  axisDeadZone: 0.2
   moveSpeed: 95
   zoomSpeed: 3
   turnSpeed: 125

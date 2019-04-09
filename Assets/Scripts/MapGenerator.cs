@@ -16,17 +16,20 @@ public class MapGenerator : MonoBehaviour
 	public Texture2D path;
 
 	public Terrain current;
-
 	public BuildMap buildMap;
-
-	public Vector3 StartPos, EndPos;
+    public Vector3 StartPos;
 
 	public Spawner Spawner;
-	public GameObject endPoint;
+    public EndPoint endpointPrefab;
+
+    public List<EndPoint> ends;
 
 	private NavMeshDataInstance currentNavMesh;
 
+    public static MapGenerator instance;
+
 	public void Start() {
+        instance = this;
 		Generate();
 	}
 
@@ -44,12 +47,11 @@ public class MapGenerator : MonoBehaviour
 		size = data.heightmapResolution;
 		data.alphamapResolution = size;
 
-		buildMap.Tiles = new TILE_TYPE[gridSize, gridSize];
-		//buildMap.Tiles = new GameObject[gridSize, gridSize];
 
-		int x = Random.Range(1, gridSize - 2);
+        int x = Random.Range(1, gridSize - 2);
 		int y = -1;
 		int steps = gridSize;
+        int length = 0;
 		StartPos = new Vector3(0.5f, 0, (x + 0.5f));
 		Vector2Int[] dirs = new Vector2Int[] { Vector2Int.right, Vector2Int.left };
 		Vector2Int dir = Vector2Int.down;
@@ -61,20 +63,30 @@ public class MapGenerator : MonoBehaviour
 			{
 				if (x + dir.x < 1 || x + dir.x > gridSize - 2 || y - dir.y > gridSize - 1)
 				{
-					//x = Mathf.Clamp(x, 1, gridSize - 2);
 					break;
 				}
 
 				x += dir.x;
 				y -= dir.y;
-				//buildMap.Tiles[x, y] = gameObject;
 				buildMap.Tiles[x, y] = TILE_TYPE.PATH;
+                length++;
 				steps--;
 			}
 
 			if (dir == Vector2Int.down)
 			{
-				dir = dirs[Random.Range(0, dirs.Length)];
+                if (x == 1)
+                {
+                    dir = Vector2Int.right;
+                }
+                else if (x == gridSize - 2)
+                {
+                    dir = Vector2Int.left;
+                }
+                else
+                {
+                    dir = dirs[Random.Range(0, dirs.Length)];
+                }
 			}
 			else
 			{
@@ -82,20 +94,18 @@ public class MapGenerator : MonoBehaviour
 			}
 		}
 		gridScale = ((float)data.size.x) / gridSize;
-		EndPos = new Vector3(y + 0.5f, 0, x + 0.5f) * gridScale;
-		StartPos *= gridScale;
+        StartPos *= gridScale;
 		float[,] heights = new float[size, size];
 		float scale = size / (float)gridSize;
 		for (x = 0; x < gridSize; x++)
 		{
 			for (y = 0; y < gridSize; y++)
 			{
-				//if(buildMap.Tiles[x, y] != gameObject)
 				if (buildMap.Tiles[x, y] != TILE_TYPE.PATH)
 				{
-					// if tile is buildable //
-					//print("[ " + x.ToString() + " | " + y.ToString() + " ]");
-					continue;
+                    // if tile is buildable //
+                    buildMap.Tiles[x, y] = TILE_TYPE.BUILDABLE;
+                    continue;
 				}
 
 				int sx = Mathf.RoundToInt(x * scale);
@@ -146,8 +156,6 @@ public class MapGenerator : MonoBehaviour
 		buildMap.MapTerrain.transform.SetParent(buildMap.transform, false);
 		Vector3 offset = new Vector3(data.size.x / -2f, 0, data.size.z / -2f);
 		buildMap.MapTerrain.transform.localPosition += offset;
-		StartPos += offset;
-		EndPos += offset;
 		buildMap.MapTerrain.layer = buildMap.MapLayer;
 		buildMap.FinishSetup();
 
@@ -159,15 +167,34 @@ public class MapGenerator : MonoBehaviour
 		NavMeshData nmd = NavMeshBuilder.BuildNavMeshData(nmbs, sourceList, new Bounds(transform.position, Vector3.one * 1000), Vector3.zero, Quaternion.identity);
 
 		currentNavMesh = NavMesh.AddNavMeshData(nmd);
-		//Spawner spawn = Instantiate(Spawner, StartPos, Quaternion.identity);
+		Spawner spawn = Instantiate(Spawner, StartPos, Quaternion.identity);
 		Spawner.Startpos = StartPos;
-		Spawner.Endpos = EndPos;
 
-		endPoint.transform.position = EndPos + Vector3.up;
-		endPoint.transform.localScale = new Vector3(gridScale, 2, gridScale);
+        EndPoint ep = GenerateEndPoint(endPos);
+        endPoint.transform.localScale = new Vector3(gridScale, 2, gridScale);
 	}
 
 	public void CleanUp() {
 		NavMesh.RemoveNavMeshData(currentNavMesh);
 	}
+
+    public EndPoint GenerateEndPoint(Vector3 point) {
+        EndPoint ep = GameObject.Instantiate<EndPoint>(endpointPrefab);
+        Vector3 endPos = new Vector3(y + 0.5f, 0, x + 0.5f) * gridScale;
+        Vector3 offset = new Vector3(data.size.x / -2f, 0, data.size.z / -2f);
+        endPos = endPos + Vector3.up;
+        return ep;
+    }
+}
+
+
+public static class ListExt {
+    public static T Random<T>(this List<T> l)
+    {
+        if (l.Count == 0)
+        {
+            return default(T);
+        }
+        return l[UnityEngine.Random.Range(0,l.Count)];
+    }
 }

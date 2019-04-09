@@ -5,14 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class EndPoint : MonoBehaviour
 {
-    public ResourceManager rm;
+    public int x, y; //the x y on the local grid
+    public int terrianX, terrianY; //the x y of the terrian this endpoint is on;
 
     public void OnTriggerEnter(Collider other) {
         if(other.tag == "Enemy"){
             GameObject.Destroy(other.gameObject);
-            rm.PlayerHealth -= 10;
-            rm.UpdateHPText();
-            if (rm.PlayerHealth <= 0) {
+            ResourceManager.instance.PlayerHealth -= 10;
+            if (ResourceManager.instance.PlayerHealth <= 0) {
 				GameObject.Find("TileMapGroup").GetComponent<MapGenerator>().CleanUp();
 				SceneManager.LoadScene(0);
 			}

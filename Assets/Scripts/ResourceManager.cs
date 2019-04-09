@@ -5,27 +5,49 @@ using UnityEngine.UI;
 
 public class ResourceManager : MonoBehaviour
 {
-    public int PlayerHealth, PlayerGold, CurWave;
+    private int _health, _gold, _wave;
+
+    public int PlayerHealth
+    {
+        get { return _health; }
+        set
+        {
+            _health = value;
+            PlayerHealthText.text = "[HEALTH]: " + _health;
+        }
+    }
+
+    public int PlayerGold
+    {
+        get { return _gold; }
+        set
+        {
+            _gold = value;
+            PlayerGoldText.text = "[GOLD]: " + _gold;
+        }
+    }
+
+    public int CurWave
+    {
+        get { return _wave; }
+        set
+        {
+            _wave = value;
+            CurWaveText.text = "[GOLD]: " + _wave;
+        }
+    }
+
+    public int startingHealth, startingGold;
+
     public Text PlayerHealthText, PlayerGoldText, CurWaveText;
+
+    public static ResourceManager instance;
 
     private void Start()
     {
+        PlayerHealth = startingHealth;
+        PlayerGold = startingGold;
 		CurWave = 1;
-        UpdateHPText();
-        UpdateGoldText();
-        UpdateWaveText();
+        instance = this;
     }
-	public void UpdateHPText()
-    {
-        PlayerHealthText.text = "[HEALTH]: "   + PlayerHealth.ToString();
-    }
-	public void UpdateGoldText()
-    {
-        PlayerGoldText.text   = "[GOLD]:     " + PlayerGold.ToString();
-    }
-	public void UpdateWaveText()
-    {
-		CurWaveText.text = "[Wave]:       " + CurWave.ToString();
-    }
-
 }
