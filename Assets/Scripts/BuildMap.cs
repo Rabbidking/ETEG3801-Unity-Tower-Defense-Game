@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum TILE_TYPE{TAKEN, NO_BUILD, BUILDABLE, PATH };
 
-struct TileObject
+public struct TileObject
 {
     public GameObject mGameObject;
     public uint mTileX, mTileY;
@@ -15,9 +15,8 @@ public class BuildMap : MonoBehaviour
     private int DummyTowerCost = 100;
     public int upgradeCost = 100;
 
-    //public char[,] Tiles;
-    //public TILE_TYPE[,] Tiles;
-    private List<TileObject> TileObjects = new List<TileObject>();
+    public TILE_TYPE[,] Tiles;
+    public List<TileObject> TileObjects = new List<TileObject>();
 
     public TowerPrefabList TowerPrefabs;
     public CameraController CamController;
@@ -32,11 +31,11 @@ public class BuildMap : MonoBehaviour
 
     private bool TileIsSelected = false;
     private uint[] CursorTile   = new uint[2];  // [x, z]
-    private uint[] SelectedTile = new uint[2];  // [x, z]
+    public uint[] SelectedTile = new uint[2];  // [x, z]
     private float[] BottomLeft  = new float[2]; // [x, z]
     public float TileSize;
 
-    private MapSection current, currentSelect;
+    public MapSection current, currentSelect;
 
     public void SetMapValues(int mapSize, int mapGridSize, float mapHeight)
     {

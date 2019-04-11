@@ -59,7 +59,7 @@ public class Spawner : MonoBehaviour
 				NavMeshAgent obj = Instantiate(nma[Wave[i].unitNum], Startpos, Quaternion.identity);
 				obj.tag = "Enemy";
 				enemies.Add(obj);
-				obj.SetDestination(MapGenerator.instance.ends[1].transform.position);
+				obj.SetDestination(MapGenerator.instance.ends.Random().transform.position);
 			}
 			yield return new WaitForSeconds(1);
 		}

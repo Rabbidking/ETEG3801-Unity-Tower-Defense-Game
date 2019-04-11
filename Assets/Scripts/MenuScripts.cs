@@ -18,7 +18,7 @@ public class MenuScripts : MonoBehaviour
     {
         //REMOVED FOR 2/29/DEMO by RyanTollefson
         //SceneManager.LoadScene(scenePaths[0], LoadSceneMode.Single);
-        
+
         //ADDED FOR 2/29/DEMO by RyanTollefson
         SceneManager.LoadScene(1);
     }
@@ -33,8 +33,17 @@ public class MenuScripts : MonoBehaviour
 	{
 		
 	}
-	
-	public void ExitGame()
+
+    public void mainMenu()
+    {
+        //REMOVED FOR 2/29/DEMO by RyanTollefson
+        //SceneManager.LoadScene(scenePaths[0], LoadSceneMode.Single);
+
+        //ADDED FOR 2/29/DEMO by RyanTollefson
+        SceneManager.LoadScene(0);
+    }
+
+    public void ExitGame()
 	{
         Application.Quit();
 	}
