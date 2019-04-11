@@ -9,6 +9,10 @@ public class ResourceManager : MonoBehaviour
     //Actual values
     private int _health, _gold, _wave;
 
+    AudioSource audioSource;
+
+    bool loadInitiated = false;
+
     //Handle Text Resource read out here;
     public int PlayerHealth {
         get { return _health;}
@@ -16,10 +20,24 @@ public class ResourceManager : MonoBehaviour
             _health = value;
             if (_health <= 0)
             {
+                audioSource = gameObject.GetComponent<AudioSource>();
                 GameObject.Find("TileMapGroup").GetComponent<MapGenerator>().CleanUp();
-                SceneManager.LoadScene(0);
+                if(!loadInitiated)
+                {
+                    StartCoroutine(DelayLoad());
+                    loadInitiated = true;
+                }
             }
             PlayerHealthText.text = "[HEALTH]: " + _health; }
+    }
+
+    IEnumerator DelayLoad()
+    {
+        audioSource.PlayOneShot(audioSource.clip);
+        yield return new WaitForSeconds(audioSource.clip.length);
+
+        //Load scene here
+        SceneManager.LoadScene(0);
     }
 
     public int PlayerGold {
