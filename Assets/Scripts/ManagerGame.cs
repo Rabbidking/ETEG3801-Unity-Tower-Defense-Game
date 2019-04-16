@@ -5,13 +5,12 @@ using UnityEngine.UI;
 
 public class ManagerGame : MonoBehaviour
 {
-    private Canvas[] myCanvases;
-    private GameObject mTower;
+    public Canvas[] myCanvases;
     public BuildMap buildMap;
     public UIManager UI;
 
     public Text DamageText, CapacitorText, FireRateText, ConverterText;
-    public Text DamageCostText, CapacitorCostText, FireRateCostText, ConverterCostText;
+    public Text WavesSurviveTxt;
 
     private int upgradeCost;
     // Start is called before the first frame update
@@ -21,6 +20,7 @@ public class ManagerGame : MonoBehaviour
         myCanvases = UI.GetComponentsInChildren<Canvas>();
         myCanvases[0].enabled = false;
         myCanvases[2].enabled = false;
+        myCanvases[3].enabled = false;
         updateCapacitor();
         updateDamage();
         updateConverter();
@@ -32,8 +32,10 @@ public class ManagerGame : MonoBehaviour
         {
             myCanvases[2].enabled = true;
         }
-        else
-            myCanvases[2].enabled = false;
+        if(ResourceManager.instance.PlayerHealth == 0)
+        {
+            EnableEndMenu();
+        }
     }
     public void TogglePauseMenu()
     {
@@ -48,26 +50,13 @@ public class ManagerGame : MonoBehaviour
             Time.timeScale = 0f;
         }
     }
-    /*public void CreateTower(GameObject tower)
+    private void EnableEndMenu()
     {
-        mTower = tower;
-        Vector3 selectedPos = buildMap.MapCursorSelect.transform.position;
-        Quaternion selectedRotation = buildMap.MapCursorSelect.transform.rotation;
-        Instantiate(mTower, selectedPos, selectedRotation);
-    }*/
-   /* public void ToggleGameOver()
-    {
-        if (ResourceManager.instance.PlayerHealth <= 0)
+        if(myCanvases[3].enabled == false)
         {
-            myCanvases[2].enabled = true;
-            myCanvases[1].enabled = false;
-            myCanvases[0].enabled = false;
+            myCanvases[3].enabled = true;
+            Time.timeScale = 0f;
         }
-    }*/
-    public void updateConverterText()
-    {
-        ConverterText.text = "Upgrade Converter";
-        ConverterCostText.text = upgradeCost.ToString();
     }
     public void upgradeConverter()
     {
@@ -101,13 +90,11 @@ public class ManagerGame : MonoBehaviour
     }
     public void updateDamage()
     {
-        DamageCostText.text = upgradeCost.ToString();
-        DamageText.text = "Upgrade Damage";
+        DamageText.text = "Upgrade Damage: "+ upgradeCost.ToString() + " Gold";
     }
     public void updateFireRate()
     {
-        FireRateText.text = "Upgrade Fire RAte";
-        FireRateCostText.text = upgradeCost.ToString();
+        FireRateText.text = "Upgrade Fire Rate:"+ upgradeCost.ToString()+ " Gold";
     }
     public void upgradeDamage()
     {
@@ -126,13 +113,11 @@ public class ManagerGame : MonoBehaviour
     }
     public void updateConverter()
     {
-        ConverterCostText.text = upgradeCost.ToString();
-        ConverterText.text = "Upgrade Converter";
+        ConverterText.text = "Upgrade Converter: "+ upgradeCost.ToString() + " Gold";
     }
     public void updateCapacitor()
     {
-        CapacitorText.text = "Upgrade Capacitor";
-        CapacitorCostText.text = upgradeCost.ToString();
+        CapacitorText.text = "Upgrade Capacitor: "+ upgradeCost.ToString() + " Gold";
     }
     public void upgradeCapacitor()
     {
@@ -148,5 +133,9 @@ public class ManagerGame : MonoBehaviour
                 }
             }
         }
+    }
+    public void updateFinalWave()
+    {
+        WavesSurviveTxt.text = "Waves Survived: " + ResourceManager.instance.CurWaveText;
     }
 }

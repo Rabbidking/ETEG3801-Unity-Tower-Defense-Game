@@ -8,6 +8,7 @@ public class ResourceManager : MonoBehaviour
 {
     //Actual values
     private int _health, _gold, _wave;
+    private ManagerGame gameManager;
 
     //Handle Text Resource read out here;
     public int PlayerHealth {
@@ -16,7 +17,9 @@ public class ResourceManager : MonoBehaviour
             _health = value;
             if (_health <= 0)
             {
-                GameObject.Find("TileMapGroup").GetComponent<MapGenerator>().CleanUp();
+                MapGenerator.instance.CleanUp();
+                //Here is to active Endgame Menu
+                //gameManager.myCanvases[3].enabled(true);
                 SceneManager.LoadScene(0);
             }
             PlayerHealthText.text = "[HEALTH]: " + _health; }

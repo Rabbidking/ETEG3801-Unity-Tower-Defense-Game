@@ -18,4 +18,16 @@ public class UIManager : MonoBehaviour
             gameManager.TogglePauseMenu();
         }
     }
+    public void startGame()
+    {
+        SceneManager.LoadScene(1);
+    }
+    public void mainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
