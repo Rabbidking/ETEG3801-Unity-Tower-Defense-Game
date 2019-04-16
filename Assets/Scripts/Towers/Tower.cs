@@ -36,7 +36,7 @@ public class Tower : MonoBehaviour
     public float width = 2.0f;
 
     // Rotation Speed
-    public float rotationSpeed = 35;
+    public float rotationSpeed = 15;
 
     public int numPierce = 2;
 
@@ -52,7 +52,7 @@ public class Tower : MonoBehaviour
         enemiesInRange = new List<GameObject>();
 
         currentLevel = 0;
-        damage = 1;
+        damage = 5;
 
         lastShotTime = Time.time;
         towerData = gameObject.GetComponentInChildren<Tower>();
@@ -60,6 +60,7 @@ public class Tower : MonoBehaviour
         rm = GameObject.Find("ResourceManager");
 
         //audio = towerData.GetComponent<AudioSource>();
+        lineRenderer.enabled = false;
     }
 
     public TowerLevel GetNextLevel()
@@ -106,7 +107,7 @@ public class Tower : MonoBehaviour
     {
         CurrentLevel = 0;
         lensType = 0;
-        damage = 1;
+        damage = 5;
     }
 
     public void damageUpgrade()
@@ -189,8 +190,8 @@ public class Tower : MonoBehaviour
                 target.GetComponent<Monster>().loseHP(damage);
                 lastShotTime = Time.time;
             }
-            else
-                lineRenderer.enabled = false;
+            //else
+                //lineRenderer.enabled = false;
         }
         else
         {
@@ -202,12 +203,17 @@ public class Tower : MonoBehaviour
 
     IEnumerator LineHandler()
     {
-        int timeToDraw = 1;
+        if (!lineRenderer.enabled)
+            lineRenderer.enabled = true;
+
+        /*float timeToDraw = 0.5f;
         if(Time.time - timeToDraw <= 0)
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(0.5f);
             lineRenderer.enabled = false;
-        }
+        }*/
+        yield return new WaitForSeconds(0.3f);
+        lineRenderer.enabled = false;
     }
 
     void Shoot(GameObject target)
@@ -215,14 +221,13 @@ public class Tower : MonoBehaviour
         Vector3 startPosition = gameObject.transform.position;
         Vector3 targetPosition = target.transform.position;
 
-        //animator.SetTrigger("fireShot");
         AudioSource audioSource = gameObject.GetComponent<AudioSource>();
         audioSource.PlayOneShot(audioSource.clip);
 
-        StartCoroutine(LineHandler());
+        //StartCoroutine(LineHandler());
 
-        if (!lineRenderer.enabled)
-            lineRenderer.enabled = true;  
+        /*if (!lineRenderer.enabled)
+            lineRenderer.enabled = true; */ 
     }
 
     void OnEnemyDestroy(GameObject enemy)
