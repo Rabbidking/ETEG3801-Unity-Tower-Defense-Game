@@ -4024,7 +4024,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 39.333496, y: 472.833}
+  m_AnchoredPosition: {x: 39.333496, y: 1315}
   m_SizeDelta: {x: 500, y: 30}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1449193023
@@ -4068,7 +4068,25 @@ MonoBehaviour:
 
     [Scroll Wheel]  : Zoom
 
-    [R]                   : Reset'
+    [R]                   : Reset
+
+    { Game Controls }
+
+    [P]                   : Pause
+
+    [B]                   : Build
+
+    [V]                   : Destroy
+
+    [M]                  : Next Wave
+
+    [1]                   : Upgrade Damage
+
+    [2]                   : Upgrade Charge Rate
+
+    [3]                   : Upgrade Converter
+
+    [4]                   : Upgrade Max Capacity'
 --- !u!222 &1449193024
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5826,8 +5844,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 10, y: 10}
-  m_SizeDelta: {x: 1172, y: 659}
+  m_AnchoredPosition: {x: 10, y: 12}
+  m_SizeDelta: {x: 1747.2, y: 1516}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &2015288293
 MonoBehaviour:
