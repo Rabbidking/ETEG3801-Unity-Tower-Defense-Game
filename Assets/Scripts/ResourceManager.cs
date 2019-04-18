@@ -76,7 +76,6 @@ public class ResourceManager : MonoBehaviour
 
 	public void Update()
 	{
-
         if (!isWave)
         {
             NextWaveText.text = string.Format("[WAVE TIMER]: {0:N}", WaveTime - stime);
@@ -95,6 +94,7 @@ public class ResourceManager : MonoBehaviour
 	{
 		if (!isWave)
 		{
+			
 			isWave = true;
 			stime = 0;
 			StartCoroutine(spawner.SpawnWave());
@@ -103,9 +103,11 @@ public class ResourceManager : MonoBehaviour
 
     public void EndWave() {
         isWave = false;
-        CurWave++;
-        if (CurWave % 5 == 0) {
-            MapGenerator.instance.Generate();
+		CurWave++;
+		if (CurWave % 5 == 0) {
+			spawner.SpawnBoss();
+			MapGenerator.instance.Generate();
+			
         }
     }
 }

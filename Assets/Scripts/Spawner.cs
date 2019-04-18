@@ -43,14 +43,7 @@ public class Spawner : MonoBehaviour
 			}
 			Wave.Add(wi);
 		}
-		if(ResourceManager.instance.CurWave %5 == 0)
-		{
-			waveinfo wi;
-			wi.unitNum = Random.Range(4, nma.Count-1);
-			//wi.unitNum = nma.Count - 1;
-			wi.numToSpawn = 1;
-			Wave.Add(wi);
-		}
+		
 		waveVal += Random.Range(0, 4);
 		for (int i = 0; i < Wave.Count; i++)
 		{
@@ -66,6 +59,14 @@ public class Spawner : MonoBehaviour
 		Wave = new List<waveinfo>();
 
         ResourceManager.instance.EndWave();
+	}
+	public void SpawnBoss()
+	{
+		int unitNum = Random.Range(3, nma.Count);
+		NavMeshAgent obj = Instantiate(nma[unitNum], Startpos, Quaternion.identity);
+		obj.tag = "Enemy";
+		enemies.Add(obj);
+		obj.SetDestination(MapGenerator.instance.ends.Random().transform.position);
 	}
 
     // Update is called once per frame
