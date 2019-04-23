@@ -36,7 +36,7 @@ public class Tower : MonoBehaviour
     public float width = 2.0f;
 
     // Rotation Speed
-    public float rotationSpeed = 15;
+    public float rotationSpeed;
 
     public int numPierce = 2;
 
@@ -174,9 +174,17 @@ public class Tower : MonoBehaviour
         {
             //lock on to an enemy target, rotating to face it
             Vector3 dir = target.transform.position - transform.position;
-            Quaternion lookRotation = Quaternion.LookRotation(dir);
-            Vector3 rotation = Quaternion.Lerp(rotate.rotation, lookRotation, Time.deltaTime * rotationSpeed).eulerAngles;
-            rotate.rotation = Quaternion.Euler(0f, rotation.y, 0f);
+            dir.y = 0;
+            dir = dir.normalized;
+            float rotY = Mathf.Acos(Vector3.Dot(dir, rotate.forward));
+            rotY = Mathf.Min(rotY, 90 * Time.deltaTime);
+            if (Vector3.Cross(dir, rotate.forward).y > 0)
+            {
+                rotate.Rotate(0, -rotY, 0);
+            }
+            else {
+                rotate.Rotate(0, rotY, 0);
+            }
 
             //update the laser firing to track enemies every frame
             lineRenderer.SetPosition(0, firePosition.transform.position);
