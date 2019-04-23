@@ -189,7 +189,7 @@ MonoBehaviour:
   converter: 5
   chargeRate: 10
   maxCapacity: 100
-  damage: 1
+  damage: 5
   width: 2
   rotationSpeed: 35
   numPierce: 2
