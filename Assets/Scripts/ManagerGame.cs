@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ManagerGame : MonoBehaviour
 {
-    private Canvas[] myCanvases;
+    public Canvas[] myCanvases;
     public BuildMap buildMap;
     public UIManager UI;
 
