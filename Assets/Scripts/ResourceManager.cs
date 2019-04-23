@@ -23,7 +23,7 @@ public class ResourceManager : MonoBehaviour
             {
                 MapGenerator.instance.CleanUp();
                 //Here is to active Endgame Menu
-                //gameManager.myCanvases[3].enabled(true);
+                gameManager.myCanvases[3].enabled = true;
                 SceneManager.LoadScene(0);
                 audioSource = gameObject.GetComponent<AudioSource>();
                 GameObject.Find("TileMapGroup").GetComponent<MapGenerator>().CleanUp();
