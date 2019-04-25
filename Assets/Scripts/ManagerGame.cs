@@ -42,6 +42,10 @@ public class ManagerGame : MonoBehaviour
             EnableEndMenu();
         }
     }
+    public void NextWaveButton()
+    {
+        ResourceManager.instance.spawnWave();
+    }
     public void TogglePauseMenu()
     {
         if (myCanvases[0].enabled == true)
