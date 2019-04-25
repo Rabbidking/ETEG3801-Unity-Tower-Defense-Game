@@ -32,6 +32,7 @@ public class ManagerGame : MonoBehaviour
         if (buildMap.current && buildMap.current.tiles[buildMap.SelectedTile[0], buildMap.SelectedTile[1]] == TILE_TYPE.TAKEN)
         {
             myCanvases[2].enabled = true;
+            //buildMap.First(buildMap.TileObjects => (buildMap.TileObjects.x = buildMap.SelectedTile[0])).ElementAT(0);
             //Time.timeScale = 0f;
         }
         else
